@@ -1,6 +1,0 @@
-[gd_scene load_steps=2 format=3 uid="uid://d3b18gjimkja8"]
-
-[ext_resource type="Texture2D" uid="uid://86xjvw6kjw5c" path="res://arts/barrier_body.tres" id="1_mhhy8"]
-
-[node name="BarrierBody" type="Sprite2D"]
-texture = ExtResource("1_mhhy8")

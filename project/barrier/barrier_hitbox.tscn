@@ -1,0 +1,14 @@
+[gd_scene load_steps=3 format=3 uid="uid://drg4h631et6en"]
+
+[ext_resource type="Script" uid="uid://dvbnugbw8jtse" path="res://barrier/barrier_hitbox.gd" id="1_yf2nu"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_ucxjq"]
+resource_local_to_scene = true
+size = Vector2(0, 0)
+
+[node name="BarrierHitbox" type="Area2D"]
+collision_mask = 0
+script = ExtResource("1_yf2nu")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("RectangleShape2D_ucxjq")
