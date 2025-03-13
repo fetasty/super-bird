@@ -8,6 +8,5 @@ var box_size: Vector2 = Vector2.ZERO
 
 func _ready() -> void:
 	collision_shape_2d.shape.size = box_size
-	print(collision_shape_2d.shape.size)
 	if box_size == Vector2.ZERO:
 		Logger.warn("Barrier hitbox size is zero")
