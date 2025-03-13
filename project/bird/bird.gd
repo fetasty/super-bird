@@ -4,7 +4,7 @@ extends Sprite2D
 signal collided
 
 ## 重力加速度
-var gravity = 600.0
+var gravity = 800.0
 ## 跳跃速度
 var jump_velocity = 150
 
@@ -29,6 +29,12 @@ func _unhandled_input(event: InputEvent) -> void:
 	if event.is_action_released("jump"):
 		_is_jumping = false
 		timer.stop()
+
+
+func reset() -> void:
+	timer.stop()
+	_is_jumping = false
+	_velocity = 0.0
 
 
 func pause() -> void:

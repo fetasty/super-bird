@@ -9,13 +9,13 @@ const HEAD_SIZE: Vector2 = Vector2(28, 9)
 signal arrived_score_pos
 
 # 移动速度
-var move_speed: float = 100
+var move_speed: float = 150
 # 计分位置
 var score_pos_x: float = 288
 # 释放位置
 var release_pos_x: float = -10
 # 通路宽度
-var passage_width: int = 50
+var passage_width: int = 70
 
 
 # 上半部分柱子数量
