@@ -3,6 +3,4 @@
 [ext_resource type="Script" uid="uid://rknbjewm0tkx" path="res://barrier/barrier.gd" id="1_lfb78"]
 
 [node name="Barrier" type="Node2D"]
-position = Vector2(500, 0)
-scale = Vector2(4, 4)
 script = ExtResource("1_lfb78")

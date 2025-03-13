@@ -5,12 +5,15 @@ const BARRIER_HEAD: PackedScene = preload("res://barrier/barrier_head.tscn")
 const BARRIER_HITBOX: PackedScene = preload("res://barrier/barrier_hitbox.tscn")
 const BODY_SIZE: Vector2 = Vector2(17, 5)
 const HEAD_SIZE: Vector2 = Vector2(28, 9)
+
 signal arrived_score_pos
 
 # 移动速度
 var move_speed: float = 100
 # 计分位置
 var score_pos_x: float = 288
+# 释放位置
+var release_pos_x: float = -10
 # 通路宽度
 var passage_width: int = 50
 
@@ -29,6 +32,8 @@ func _physics_process(delta: float) -> void:
 	if not _arrived_score_pos and position.x <= score_pos_x:
 		_arrived_score_pos = true
 		arrived_score_pos.emit()
+	if position.x < release_pos_x:
+		queue_free()
 
 
 ## 重新随机构建一个障碍柱
@@ -97,8 +102,8 @@ func rebuild_barrier() -> void:
 
 
 func pause() -> void:
-	pass
+	process_mode = Node.PROCESS_MODE_DISABLED
 
 
 func resume() -> void:
-	pass
+	process_mode = Node.PROCESS_MODE_INHERIT
