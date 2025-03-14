@@ -99,11 +99,3 @@ func rebuild_barrier() -> void:
 		lower_head_box.box_size = Vector2(HEAD_SIZE.x - 2, HEAD_SIZE.y - 2)
 		lower_head_box.position = Vector2(0, screen_size.y - BODY_SIZE.y * (lower_size - 1) - HEAD_SIZE.y * 0.5)
 		add_child(lower_head_box)
-
-
-func pause() -> void:
-	process_mode = Node.PROCESS_MODE_DISABLED
-
-
-func resume() -> void:
-	process_mode = Node.PROCESS_MODE_INHERIT

@@ -16,4 +16,114 @@ transform = Transform2D(4, 0, 0, 4, 0, 0)
 
 [node name="Barriers" type="Node2D" parent="GameLayer"]
 
+[node name="UILayer" type="CanvasLayer" parent="."]
+
+[node name="HUD" type="Control" parent="UILayer"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="HBoxContainer" type="HBoxContainer" parent="UILayer/HUD"]
+layout_mode = 0
+offset_left = 20.0
+offset_top = 20.0
+offset_right = 138.0
+offset_bottom = 75.0
+
+[node name="Label" type="Label" parent="UILayer/HUD/HBoxContainer"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 40
+text = "分数:"
+
+[node name="Score" type="Label" parent="UILayer/HUD/HBoxContainer"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 40
+text = "0"
+
+[node name="Menu" type="Control" parent="UILayer"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="ColorRect" type="ColorRect" parent="UILayer/Menu"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0, 0, 0, 0.392157)
+
+[node name="VBoxContainer" type="VBoxContainer" parent="UILayer/Menu"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -20.0
+offset_top = -20.0
+offset_right = 20.0
+offset_bottom = 20.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/separation = 100
+
+[node name="Title" type="Label" parent="UILayer/Menu/VBoxContainer"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 66
+text = "Super bird"
+
+[node name="ScoreContainer" type="HBoxContainer" parent="UILayer/Menu/VBoxContainer"]
+visible = false
+layout_mode = 2
+alignment = 1
+
+[node name="Label" type="Label" parent="UILayer/Menu/VBoxContainer/ScoreContainer"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 40
+text = "分数:"
+
+[node name="Score" type="Label" parent="UILayer/Menu/VBoxContainer/ScoreContainer"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 40
+text = "0"
+
+[node name="VBoxContainer" type="VBoxContainer" parent="UILayer/Menu/VBoxContainer"]
+layout_mode = 2
+theme_override_constants/separation = 20
+alignment = 1
+
+[node name="Start" type="Button" parent="UILayer/Menu/VBoxContainer/VBoxContainer"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 40
+text = "开始游戏"
+
+[node name="Resume" type="Button" parent="UILayer/Menu/VBoxContainer/VBoxContainer"]
+visible = false
+layout_mode = 2
+theme_override_font_sizes/font_size = 40
+text = "继续游戏"
+
+[node name="Restart" type="Button" parent="UILayer/Menu/VBoxContainer/VBoxContainer"]
+visible = false
+layout_mode = 2
+theme_override_font_sizes/font_size = 40
+text = "重新开始"
+
+[node name="Exit" type="Button" parent="UILayer/Menu/VBoxContainer/VBoxContainer"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 40
+text = "退出"
+
 [connection signal="timeout" from="GameLayer/BarrierTimer" to="." method="_on_barrier_timer_timeout"]
+[connection signal="pressed" from="UILayer/Menu/VBoxContainer/VBoxContainer/Start" to="." method="_on_start_pressed"]
+[connection signal="pressed" from="UILayer/Menu/VBoxContainer/VBoxContainer/Resume" to="." method="_on_resume_pressed"]
+[connection signal="pressed" from="UILayer/Menu/VBoxContainer/VBoxContainer/Restart" to="." method="_on_restart_pressed"]
+[connection signal="pressed" from="UILayer/Menu/VBoxContainer/VBoxContainer/Exit" to="." method="_on_exit_pressed"]

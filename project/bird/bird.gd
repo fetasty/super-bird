@@ -19,7 +19,15 @@ func _physics_process(delta: float) -> void:
 		_velocity = -jump_velocity
 	else:
 		_velocity += gravity * delta
+	if _velocity > 0:
+		rotation_degrees = 10
+	else:
+		rotation_degrees = -10
 	position.y += _velocity * delta
+	if position.y < -10:
+		collided.emit()
+	elif position.y > get_viewport().size.y * 0.25 + 10:
+		collided.emit()
 
 
 func _unhandled_input(event: InputEvent) -> void:
@@ -35,14 +43,6 @@ func reset() -> void:
 	timer.stop()
 	_is_jumping = false
 	_velocity = 0.0
-
-
-func pause() -> void:
-	process_mode = Node.PROCESS_MODE_DISABLED
-
-
-func resume() -> void:
-	process_mode = Node.PROCESS_MODE_INHERIT
 
 
 func _on_timer_timeout() -> void:
