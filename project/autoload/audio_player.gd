@@ -38,13 +38,13 @@ func set_background_play(enable: bool) -> void:
 
 
 func play_jump() -> void:
-	if _is_mute or _is_play_effect:
+	if _is_mute or not _is_play_effect:
 		return
 	jump_audio.play()
 
 
 func play_hit() -> void:
-	if _is_mute or _is_play_effect:
+	if _is_mute or not _is_play_effect:
 		return
 	hit_audio.play()
 

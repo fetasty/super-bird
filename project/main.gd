@@ -54,9 +54,12 @@ var game_state: int = STATE_WELCOME:
 @onready var resume: Button = $UILayer/Menu/VBoxContainer/VBoxContainer/Resume
 @onready var restart: Button = $UILayer/Menu/VBoxContainer/VBoxContainer/Restart
 @onready var hud_score: Label = $UILayer/HUD/HBoxContainer/Score
+@onready var version_label: Label = $UILayer/Menu/VersionInfo/Version
 
 
 func _ready() -> void:
+	var version = load("res://version.tres")
+	version_label.text = version.version_str()
 	barrier_timer.wait_time = Config.get_value("barrier_spawn_time", 1.0)
 	var viewport_size = get_viewport().size / game_layer.scale.x
 	bird.position = viewport_size * 0.5

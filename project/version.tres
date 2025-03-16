@@ -1,0 +1,12 @@
+[gd_resource type="Resource" script_class="Version" load_steps=2 format=3 uid="uid://cjvt0egobqp83"]
+
+[ext_resource type="Script" uid="uid://brs1ltvmpu2qe" path="res://version.gd" id="1_qlspv"]
+
+[resource]
+script = ExtResource("1_qlspv")
+majar_version = 0
+minor_version = 9
+patch_number = 0
+version_type = "debug"
+build_number = 20250316
+metadata/_custom_type_script = "uid://brs1ltvmpu2qe"
