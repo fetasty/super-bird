@@ -55,12 +55,15 @@ var game_state: int = STATE_WELCOME:
 @onready var restart: Button = $UILayer/Menu/VBoxContainer/VBoxContainer/Restart
 @onready var hud_score: Label = $UILayer/HUD/HBoxContainer/Score
 @onready var version_label: Label = $UILayer/Menu/VersionInfo/Version
+@onready var mute_button: TextureButton = $UILayer/Menu/VolumeContainer/MuteButton
+@onready var volume_slider: HSlider = $UILayer/Menu/VolumeContainer/VolumeSlider
 
 
 func _ready() -> void:
 	var version = load("res://version.tres")
 	version_label.text = version.version_str()
 	barrier_timer.wait_time = Config.get_value("barrier_spawn_time", 1.0)
+	AudioPlayer.volume_update = _volume_update
 	var viewport_size = get_viewport().size / game_layer.scale.x
 	bird.position = viewport_size * 0.5
 	bird.collided.connect(_on_bird_collided)
@@ -71,6 +74,10 @@ func _unhandled_input(event: InputEvent) -> void:
 	if event.is_action_pressed("pause"):
 		if game_state == STATE_PLAYING:
 			game_state = STATE_PAUSE
+
+
+func _exit_tree() -> void:
+	AudioPlayer.volume_update = Callable()
 
 
 func _restart_game() -> void:
@@ -99,6 +106,11 @@ func _pause_game() -> void:
 
 func _resume_game() -> void:
 	game_layer.process_mode = Node.PROCESS_MODE_INHERIT
+
+
+func _volume_update(mute: bool, volume: float) -> void:
+	volume_slider.value = volume
+	mute_button.button_pressed = mute
 
 
 func _on_bird_collided() -> void:
@@ -133,3 +145,13 @@ func _on_resume_pressed() -> void:
 
 func _on_restart_pressed() -> void:
 	_restart_game()
+
+
+func _on_mute_button_toggled(toggled_on: bool) -> void:
+	AudioPlayer.set_mute(toggled_on)
+
+
+func _on_h_slider_drag_ended(value_changed: bool) -> void:
+	if value_changed:
+		var volume = volume_slider.value
+		AudioPlayer.set_volume(volume)
