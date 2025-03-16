@@ -81,7 +81,6 @@ theme_override_font_sizes/font_size = 66
 text = "Super bird"
 
 [node name="ScoreContainer" type="HBoxContainer" parent="UILayer/Menu/VBoxContainer"]
-visible = false
 layout_mode = 2
 alignment = 1
 

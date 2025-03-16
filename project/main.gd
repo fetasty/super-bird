@@ -11,7 +11,7 @@ var score: int = 0:
 		score = value
 		hud_score.text = str(score)
 		menu_score.text = str(score)
-		score_container.visible = (value > 0)
+		# score_container.visible = (value > 0)
 	get:
 		return score
 
@@ -25,18 +25,23 @@ var game_state: int = STATE_WELCOME:
 				start.visible = true
 				resume.visible = false
 				restart.visible = false
+				AudioPlayer.set_welcome_play(true)
+				AudioPlayer.set_background_play(false)
 			STATE_PLAYING:
 				_hide_menu()
 				_resume_game.call_deferred()
+				AudioPlayer.set_welcome_play(false)
+				AudioPlayer.set_background_play(true)
 			STATE_PAUSE:
 				_pause_game.call_deferred()
 				_show_menu()
 				start.visible = false
 				resume.visible = true
 				restart.visible = true
+				AudioPlayer.set_welcome_play(true)
+				AudioPlayer.set_background_play(false)
 	get:
 		return game_state
-
 
 @onready var game_layer: CanvasLayer = $GameLayer
 @onready var bird: Sprite2D = $GameLayer/Bird
@@ -52,6 +57,7 @@ var game_state: int = STATE_WELCOME:
 
 
 func _ready() -> void:
+	barrier_timer.wait_time = Config.get_value("barrier_spawn_time", 1.0)
 	var viewport_size = get_viewport().size / game_layer.scale.x
 	bird.position = viewport_size * 0.5
 	bird.collided.connect(_on_bird_collided)

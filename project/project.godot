@@ -18,6 +18,8 @@ config/icon="res://icon.svg"
 [autoload]
 
 Logger="*res://addons/godot-logger/logger.gd"
+Config="*res://autoload/config.gd"
+AudioPlayer="*res://autoload/audio_player.tscn"
 
 [display]
 
