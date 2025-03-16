@@ -21,13 +21,15 @@ class_name Version
 ## stable 经过长期验证的稳定版本
 @export_enum("debug", "alpha", "beta", "rc", "release", "stable") var version_type: String = "debug"
 
-## 构建时间 格式: 20250316
-@export_range(20000101, 20990101) var build_number: int = 20250316
+## 构建时间: 年月日
+@export_range(20000101, 20990101) var build_date: int = 20250316
+## 构建时间: 时分
+@export_range(0, 2459) var build_time: int = 2207
 
 
 ## 返回版本字符串, 格式: 0.1.1_debug-build20240608
 func version_str() -> String:
-	return "%s.%s.%s_%s-build%s" % [majar_version, minor_version, patch_number, version_type, build_number]
+	return "%s.%s.%s_%s-build%s%s" % [majar_version, minor_version, patch_number, version_type, build_date, build_time]
 
 
 ## 返回代表版本大小的数字, 用于程序内部配置/数据结构版本的控制

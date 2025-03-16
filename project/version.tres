@@ -4,9 +4,10 @@
 
 [resource]
 script = ExtResource("1_qlspv")
-majar_version = 0
-minor_version = 9
+majar_version = 1
+minor_version = 0
 patch_number = 0
 version_type = "debug"
-build_number = 20250316
+build_date = 20250316
+build_time = 2208
 metadata/_custom_type_script = "uid://brs1ltvmpu2qe"
