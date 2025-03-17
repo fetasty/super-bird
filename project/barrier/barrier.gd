@@ -68,7 +68,7 @@ func _rebuild_barrier() -> void:
 		head.position = Vector2(0, BODY_SIZE.y * (_upper_size - 1) + HEAD_SIZE.y * 0.5)
 		add_child(head)
 	# 计算下半部分柱子数量
-	var screen_size = get_viewport().size * 0.25 # 放大4倍, 屏幕像素区域只有原来的1/4大小
+	var screen_size = get_viewport_rect().size * 0.25 # 放大4倍, 屏幕像素区域只有原来的1/4大小
 	var lower_screen_size = screen_size.y - (BODY_SIZE.y * (_upper_size - 1) + HEAD_SIZE.y + _passage_width)
 	var lower_size = 0
 	if lower_screen_size >= HEAD_SIZE.y:

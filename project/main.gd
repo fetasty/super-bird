@@ -57,6 +57,8 @@ var game_state: int = STATE_WELCOME:
 @onready var version_label: Label = $UILayer/Menu/VersionInfo/Version
 @onready var mute_button: TextureButton = $UILayer/Menu/VolumeContainer/MuteButton
 @onready var volume_slider: HSlider = $UILayer/Menu/VolumeContainer/VolumeSlider
+@onready var viewport_size: Label = $UILayer/Menu/ViewportSize
+@onready var viewport_rect_size: Label = $UILayer/Menu/ViewportRectSize
 
 
 func _ready() -> void:
@@ -64,10 +66,15 @@ func _ready() -> void:
 	version_label.text = version.version_str()
 	barrier_timer.wait_time = Config.get_value("barrier_spawn_time", 1.0)
 	AudioPlayer.volume_update = _volume_update
-	var viewport_size = get_viewport().size / game_layer.scale.x
+	var viewport_size = get_viewport_rect().size / game_layer.scale.x
 	bird.position = viewport_size * 0.5
 	bird.collided.connect(_on_bird_collided)
 	game_state = STATE_WELCOME
+
+
+func _process(delta: float) -> void:
+	viewport_size.text = "Viewport size: %s" % get_viewport().size
+	viewport_rect_size.text = "Viewport Rect size: %s" % get_viewport_rect().size
 
 
 func _unhandled_input(event: InputEvent) -> void:
@@ -85,7 +92,7 @@ func _restart_game() -> void:
 		barriers.remove_child(child)
 		child.queue_free()
 	score = 0
-	var viewport_size = get_viewport().size / game_layer.scale.x
+	var viewport_size = get_viewport_rect().size / game_layer.scale.x
 	bird.position = viewport_size * 0.5
 	bird.reset()
 	barrier_timer.start()
@@ -124,7 +131,7 @@ func _on_barrier_arrived_score_pos() -> void:
 
 
 func _on_barrier_timer_timeout() -> void:
-	var viewport_size = get_viewport().size / game_layer.scale.x
+	var viewport_size = get_viewport_rect().size / game_layer.scale.x
 	var barrier = BARRIER.instantiate()
 	barrier.arrived_score_pos.connect(_on_barrier_arrived_score_pos)
 	barrier.position = Vector2(viewport_size.x, 0)
