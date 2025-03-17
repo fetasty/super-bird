@@ -6,8 +6,8 @@
 script = ExtResource("1_qlspv")
 majar_version = 1
 minor_version = 0
-patch_number = 0
+patch_number = 1
 version_type = "debug"
-build_date = 20250316
-build_time = 2208
+build_date = 20250317
+build_time = 2237
 metadata/_custom_type_script = "uid://brs1ltvmpu2qe"
