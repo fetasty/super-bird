@@ -39,7 +39,7 @@ func _physics_process(delta: float) -> void:
 	if position.y < -10:
 		collided.emit()
 		AudioPlayer.play_hit()
-	elif position.y > get_viewport_rect().size.y * 0.25 + 10:
+	elif position.y > get_viewport_rect().size.y * 0.5 + 10:
 		collided.emit()
 		AudioPlayer.play_hit()
 

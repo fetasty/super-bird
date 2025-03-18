@@ -9,8 +9,8 @@
 script = ExtResource("1_0xm2m")
 
 [node name="GameLayer" type="CanvasLayer" parent="."]
-scale = Vector2(4, 4)
-transform = Transform2D(4, 0, 0, 4, 0, 0)
+scale = Vector2(2, 2)
+transform = Transform2D(2, 0, 0, 2, 0, 0)
 
 [node name="Bird" parent="GameLayer" instance=ExtResource("2_0xm2m")]
 
@@ -30,19 +30,19 @@ grow_vertical = 2
 
 [node name="HBoxContainer" type="HBoxContainer" parent="UILayer/HUD"]
 layout_mode = 0
-offset_left = 20.0
-offset_top = 20.0
-offset_right = 138.0
-offset_bottom = 75.0
+offset_left = 10.0
+offset_top = 10.0
+offset_right = 72.0
+offset_bottom = 38.0
 
 [node name="Label" type="Label" parent="UILayer/HUD/HBoxContainer"]
 layout_mode = 2
-theme_override_font_sizes/font_size = 40
+theme_override_font_sizes/font_size = 20
 text = "分数:"
 
 [node name="Score" type="Label" parent="UILayer/HUD/HBoxContainer"]
 layout_mode = 2
-theme_override_font_sizes/font_size = 40
+theme_override_font_sizes/font_size = 20
 text = "0"
 
 [node name="Menu" type="Control" parent="UILayer"]
@@ -69,17 +69,17 @@ anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-offset_left = -20.0
-offset_top = -20.0
-offset_right = 20.0
-offset_bottom = 20.0
+offset_left = -83.0
+offset_top = -128.0
+offset_right = 83.0
+offset_bottom = 128.0
 grow_horizontal = 2
 grow_vertical = 2
-theme_override_constants/separation = 100
+theme_override_constants/separation = 50
 
 [node name="Title" type="Label" parent="UILayer/Menu/VBoxContainer"]
 layout_mode = 2
-theme_override_font_sizes/font_size = 66
+theme_override_font_sizes/font_size = 33
 text = "Super bird"
 
 [node name="ScoreContainer" type="HBoxContainer" parent="UILayer/Menu/VBoxContainer"]
@@ -88,39 +88,39 @@ alignment = 1
 
 [node name="Label" type="Label" parent="UILayer/Menu/VBoxContainer/ScoreContainer"]
 layout_mode = 2
-theme_override_font_sizes/font_size = 40
+theme_override_font_sizes/font_size = 20
 text = "分数:"
 
 [node name="Score" type="Label" parent="UILayer/Menu/VBoxContainer/ScoreContainer"]
 layout_mode = 2
-theme_override_font_sizes/font_size = 40
+theme_override_font_sizes/font_size = 20
 text = "0"
 
 [node name="VBoxContainer" type="VBoxContainer" parent="UILayer/Menu/VBoxContainer"]
 layout_mode = 2
-theme_override_constants/separation = 20
+theme_override_constants/separation = 10
 alignment = 1
 
 [node name="Start" type="Button" parent="UILayer/Menu/VBoxContainer/VBoxContainer"]
 layout_mode = 2
-theme_override_font_sizes/font_size = 40
+theme_override_font_sizes/font_size = 20
 text = "开始游戏"
 
 [node name="Resume" type="Button" parent="UILayer/Menu/VBoxContainer/VBoxContainer"]
 visible = false
 layout_mode = 2
-theme_override_font_sizes/font_size = 40
+theme_override_font_sizes/font_size = 20
 text = "继续游戏"
 
 [node name="Restart" type="Button" parent="UILayer/Menu/VBoxContainer/VBoxContainer"]
 visible = false
 layout_mode = 2
-theme_override_font_sizes/font_size = 40
+theme_override_font_sizes/font_size = 20
 text = "重新开始"
 
 [node name="Exit" type="Button" parent="UILayer/Menu/VBoxContainer/VBoxContainer"]
 layout_mode = 2
-theme_override_font_sizes/font_size = 40
+theme_override_font_sizes/font_size = 20
 text = "退出"
 
 [node name="VersionInfo" type="HBoxContainer" parent="UILayer/Menu"]
@@ -130,10 +130,10 @@ anchor_left = 1.0
 anchor_top = 1.0
 anchor_right = 1.0
 anchor_bottom = 1.0
-offset_left = -148.0
-offset_top = -70.0
-offset_right = -80.0
-offset_bottom = -30.0
+offset_left = -118.0
+offset_top = -60.0
+offset_right = -50.0
+offset_bottom = -20.0
 grow_horizontal = 0
 grow_vertical = 0
 
@@ -141,13 +141,13 @@ grow_vertical = 0
 visible = false
 layout_mode = 2
 theme_override_colors/font_color = Color(0.491863, 0.491863, 0.491863, 1)
-theme_override_font_sizes/font_size = 20
+theme_override_font_sizes/font_size = 10
 text = "Version:"
 
 [node name="Version" type="Label" parent="UILayer/Menu/VersionInfo"]
 layout_mode = 2
 theme_override_colors/font_color = Color(0.491863, 0.491863, 0.491863, 1)
-theme_override_font_sizes/font_size = 20
+theme_override_font_sizes/font_size = 10
 horizontal_alignment = 2
 vertical_alignment = 1
 
@@ -156,12 +156,13 @@ layout_mode = 1
 anchors_preset = 1
 anchor_left = 1.0
 anchor_right = 1.0
-offset_left = -328.0
-offset_top = 100.0
-offset_right = -150.0
-offset_bottom = 148.0
+offset_left = -228.0
+offset_top = 20.0
+offset_right = 50.0
+offset_bottom = 68.0
 grow_horizontal = 0
-theme_override_constants/separation = 30
+scale = Vector2(0.7, 0.7)
+theme_override_constants/separation = 15
 alignment = 1
 
 [node name="MuteButton" type="TextureButton" parent="UILayer/Menu/VolumeContainer"]
@@ -180,27 +181,6 @@ size_flags_vertical = 4
 max_value = 1.0
 step = 0.02
 value = 0.5
-
-[node name="ViewportRectSize" type="Label" parent="UILayer/Menu"]
-layout_mode = 1
-anchors_preset = 1
-anchor_left = 1.0
-anchor_right = 1.0
-offset_left = -40.0
-offset_bottom = 23.0
-grow_horizontal = 0
-theme_override_font_sizes/font_size = 50
-
-[node name="ViewportSize" type="Label" parent="UILayer/Menu"]
-layout_mode = 1
-anchors_preset = 1
-anchor_left = 1.0
-anchor_right = 1.0
-offset_left = -40.0
-offset_top = 100.0
-offset_bottom = 169.0
-grow_horizontal = 0
-theme_override_font_sizes/font_size = 50
 
 [connection signal="timeout" from="GameLayer/BarrierTimer" to="." method="_on_barrier_timer_timeout"]
 [connection signal="pressed" from="UILayer/Menu/VBoxContainer/VBoxContainer/Start" to="." method="_on_start_pressed"]

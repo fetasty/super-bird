@@ -57,8 +57,6 @@ var game_state: int = STATE_WELCOME:
 @onready var version_label: Label = $UILayer/Menu/VersionInfo/Version
 @onready var mute_button: TextureButton = $UILayer/Menu/VolumeContainer/MuteButton
 @onready var volume_slider: HSlider = $UILayer/Menu/VolumeContainer/VolumeSlider
-@onready var viewport_size: Label = $UILayer/Menu/ViewportSize
-@onready var viewport_rect_size: Label = $UILayer/Menu/ViewportRectSize
 
 
 func _ready() -> void:
@@ -70,11 +68,6 @@ func _ready() -> void:
 	bird.position = viewport_size * 0.5
 	bird.collided.connect(_on_bird_collided)
 	game_state = STATE_WELCOME
-
-
-func _process(delta: float) -> void:
-	viewport_size.text = "Viewport size: %s" % get_viewport().size
-	viewport_rect_size.text = "Viewport Rect size: %s" % get_viewport_rect().size
 
 
 func _unhandled_input(event: InputEvent) -> void:
