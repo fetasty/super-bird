@@ -39,6 +39,11 @@ func _physics_process(delta: float) -> void:
 		queue_free()
 
 
+func change_speed(speed: float) -> void:
+	var tween = get_tree().create_tween()
+	tween.tween_property(self, "_move_speed", speed, 1.0)
+
+
 func _load_config() -> void:
 	_move_speed = Config.get_value("barrier_speed", 120.0)
 	_score_pos_x = Config.get_value("barrier_score_pos", 288.0)

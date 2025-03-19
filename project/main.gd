@@ -27,11 +27,14 @@ var game_state: int = STATE_WELCOME:
 				restart.visible = false
 				AudioPlayer.set_welcome_play(true)
 				AudioPlayer.set_background_play(false)
+				dynamic.game_restart()
+				dynamic.game_pause()
 			STATE_PLAYING:
 				_hide_menu()
 				_resume_game.call_deferred()
 				AudioPlayer.set_welcome_play(false)
 				AudioPlayer.set_background_play(true)
+				dynamic.game_resume()
 			STATE_PAUSE:
 				_pause_game.call_deferred()
 				_show_menu()
@@ -40,6 +43,7 @@ var game_state: int = STATE_WELCOME:
 				restart.visible = true
 				AudioPlayer.set_welcome_play(true)
 				AudioPlayer.set_background_play(false)
+				dynamic.game_pause()
 	get:
 		return game_state
 
@@ -57,6 +61,7 @@ var game_state: int = STATE_WELCOME:
 @onready var version_label: Label = $UILayer/Menu/VersionInfo/Version
 @onready var mute_button: TextureButton = $UILayer/Menu/VolumeContainer/MuteButton
 @onready var volume_slider: HSlider = $UILayer/Menu/VolumeContainer/VolumeSlider
+@onready var dynamic: Node2D = $Dynamic
 
 
 func _ready() -> void:
@@ -68,6 +73,8 @@ func _ready() -> void:
 	bird.position = viewport_size * 0.5
 	bird.collided.connect(_on_bird_collided)
 	game_state = STATE_WELCOME
+	# 动态难度事件
+	dynamic.level_changed.connect(_on_level_changed)
 
 
 func _unhandled_input(event: InputEvent) -> void:
@@ -121,6 +128,16 @@ func _on_bird_collided() -> void:
 func _on_barrier_arrived_score_pos() -> void:
 	score += 1
 	Logger.info("Add score! Total score: %s" % score)
+
+
+func _on_level_changed(gravity: float, barrier_spawn_time: float, barrier_speed: float) -> void:
+	Logger.info("Level changed: gravity(%s), barrier_spawn_time(%s), barrier_speed(%s)" % [gravity, barrier_spawn_time, barrier_speed])
+	bird.change_gravity(gravity)
+	Config.set_value("barrier_speed", barrier_speed) # TODO: 运行时生效配置, 需要与配置文件拆分
+	for barrier in barriers.get_children():
+		barrier.change_speed(barrier_speed)
+	var tween = get_tree().create_tween()
+	tween.tween_property(barrier_timer, "wait_time", barrier_spawn_time, 1.0)
 
 
 func _on_barrier_timer_timeout() -> void:

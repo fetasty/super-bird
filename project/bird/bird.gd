@@ -60,6 +60,11 @@ func reset() -> void:
 	_velocity = 0.0
 
 
+func change_gravity(gravity: float) -> void:
+	var tween = get_tree().create_tween()
+	tween.tween_property(self, "_gravity", gravity, 1.0)
+
+
 func _load_config() -> void:
 	_gravity = Config.get_value("bird_gravity", 800.0)
 	_jump_velocity = Config.get_value("bird_jump_velocity", 170.0)
