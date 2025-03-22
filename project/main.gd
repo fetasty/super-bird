@@ -27,11 +27,10 @@ var game_state: int = STATE_WELCOME:
 				restart.visible = false
 				AudioPlayer.set_welcome_play(true)
 				AudioPlayer.set_background_play(false)
-				dynamic.game_restart()
 				dynamic.game_pause()
 			STATE_PLAYING:
-				_hide_menu()
 				_resume_game.call_deferred()
+				_hide_menu()
 				AudioPlayer.set_welcome_play(false)
 				AudioPlayer.set_background_play(true)
 				dynamic.game_resume()
@@ -46,6 +45,8 @@ var game_state: int = STATE_WELCOME:
 				dynamic.game_pause()
 	get:
 		return game_state
+
+var _game_layer_scale: float = 2.0
 
 @onready var game_layer: CanvasLayer = $GameLayer
 @onready var bird: Sprite2D = $GameLayer/Bird
@@ -65,16 +66,7 @@ var game_state: int = STATE_WELCOME:
 
 
 func _ready() -> void:
-	var version = load("res://version.tres")
-	version_label.text = version.version_str()
-	barrier_timer.wait_time = Config.get_value("barrier_spawn_time", 1.0)
-	AudioPlayer.volume_update = _volume_update
-	var viewport_size = get_viewport_rect().size / game_layer.scale.x
-	bird.position = viewport_size * 0.5
-	bird.collided.connect(_on_bird_collided)
-	game_state = STATE_WELCOME
-	# 动态难度事件
-	dynamic.level_changed.connect(_on_level_changed)
+	_game_init()
 
 
 func _unhandled_input(event: InputEvent) -> void:
@@ -83,19 +75,48 @@ func _unhandled_input(event: InputEvent) -> void:
 			game_state = STATE_PAUSE
 
 
-func _exit_tree() -> void:
-	AudioPlayer.volume_update = Callable()
+func _load_config() -> void:
+	_game_layer_scale = GameData.get_config("game_layer_scale")
+	barrier_timer.wait_time = GameData.get_config("barrier_spawn_time")
+	mute_button.button_pressed = GameData.get_data("audio_mute")
+	volume_slider.value = GameData.get_data("audio_volume")
+	game_layer.scale = Vector2(_game_layer_scale, _game_layer_scale)
 
 
-func _restart_game() -> void:
+func _game_init() -> void:
+	# version info display
+	var version = load("res://version.tres")
+	version_label.text = version.version_str()
+	# reset game scene and game data
+	_reset_game()
+	# bind signals
+	bird.collided.connect(_on_bird_collided)
+	GameData.config_changed.connect(_on_config_changed)
+	GameData.data_changed.connect(_on_data_changed)
+	# init game state
+	game_state = STATE_WELCOME
+
+
+func _reset_game() -> void:
+	GameData.reset_config()
+	_load_config()
+	# clean the scene
 	for child in barriers.get_children():
 		barriers.remove_child(child)
 		child.queue_free()
-	score = 0
-	var viewport_size = get_viewport_rect().size / game_layer.scale.x
+	# reset bird position
+	var viewport_size = get_viewport_rect().size / _game_layer_scale
 	bird.position = viewport_size * 0.5
+	# reset bird state
 	bird.reset()
-	barrier_timer.start()
+	# reset score
+	score = 0
+	# reset dynamic difficulty
+	dynamic.game_reset()
+
+
+func _restart_game() -> void:
+	_reset_game()
 	game_state = STATE_PLAYING
 
 
@@ -115,9 +136,22 @@ func _resume_game() -> void:
 	game_layer.process_mode = Node.PROCESS_MODE_INHERIT
 
 
-func _volume_update(mute: bool, volume: float) -> void:
-	volume_slider.value = volume
-	mute_button.button_pressed = mute
+func _on_config_changed(key: String, value: Variant) -> void:
+	match key:
+		"barrier_spawn_time":
+			barrier_timer.wait_time = value
+		_:
+			pass
+
+
+func _on_data_changed(key: String, value: Variant) -> void:
+	match key:
+		"audio_mute":
+			mute_button.set_pressed_no_signal(value)
+		"audio_volume":
+			volume_slider.set_value_no_signal(value)
+		_:
+			pass
 
 
 func _on_bird_collided() -> void:
@@ -132,16 +166,11 @@ func _on_barrier_arrived_score_pos() -> void:
 
 func _on_level_changed(gravity: float, barrier_spawn_time: float, barrier_speed: float) -> void:
 	Logger.info("Level changed: gravity(%s), barrier_spawn_time(%s), barrier_speed(%s)" % [gravity, barrier_spawn_time, barrier_speed])
-	bird.change_gravity(gravity)
-	Config.set_value("barrier_speed", barrier_speed) # TODO: 运行时生效配置, 需要与配置文件拆分
-	for barrier in barriers.get_children():
-		barrier.change_speed(barrier_speed)
-	var tween = get_tree().create_tween()
-	tween.tween_property(barrier_timer, "wait_time", barrier_spawn_time, 1.0)
+	GameData.set_config("barrier_speed", barrier_speed)
 
 
 func _on_barrier_timer_timeout() -> void:
-	var viewport_size = get_viewport_rect().size / game_layer.scale.x
+	var viewport_size = get_viewport_rect().size / _game_layer_scale
 	var barrier = BARRIER.instantiate()
 	barrier.arrived_score_pos.connect(_on_barrier_arrived_score_pos)
 	barrier.position = Vector2(viewport_size.x, 0)
@@ -165,10 +194,14 @@ func _on_restart_pressed() -> void:
 
 
 func _on_mute_button_toggled(toggled_on: bool) -> void:
-	AudioPlayer.set_mute(toggled_on)
+	GameData.set_data("audio_mute", toggled_on)
 
 
 func _on_h_slider_drag_ended(value_changed: bool) -> void:
 	if value_changed:
 		var volume = volume_slider.value
-		AudioPlayer.set_volume(volume)
+		GameData.set_data("audio_volume", volume)
+		if volume < 0.1:
+			GameData.set_data("audio_mute", true)
+		else:
+			GameData.set_data("audio_mute", false)

@@ -10,6 +10,8 @@ var _jump_velocity = 150.0
 ## 最长保持跳跃时间
 var _max_jump_time = 0.2
 
+var _game_layer_scale: float = 2.0
+
 var _fall_degress = 10.0
 var _jump_degrees = -10.0
 var _bird_scale = 0.75
@@ -22,8 +24,7 @@ var _is_jumping = false
 
 func _ready() -> void:
 	_load_config()
-	timer.wait_time = _max_jump_time
-	scale = Vector2(_bird_scale, _bird_scale)
+	GameData.config_changed.connect(_on_config_changed)
 
 
 func _physics_process(delta: float) -> void:
@@ -39,7 +40,7 @@ func _physics_process(delta: float) -> void:
 	if position.y < -10:
 		collided.emit()
 		AudioPlayer.play_hit()
-	elif position.y > get_viewport_rect().size.y * 0.5 + 10:
+	elif position.y > get_viewport_rect().size.y / _game_layer_scale + 10:
 		collided.emit()
 		AudioPlayer.play_hit()
 
@@ -55,23 +56,34 @@ func _unhandled_input(event: InputEvent) -> void:
 
 
 func reset() -> void:
+	_load_config()
 	timer.stop()
 	_is_jumping = false
 	_velocity = 0.0
 
 
-func change_gravity(gravity: float) -> void:
-	var tween = get_tree().create_tween()
-	tween.tween_property(self, "_gravity", gravity, 1.0)
+func _change_gravity(gravity: float) -> void:
+	_gravity = gravity
 
 
 func _load_config() -> void:
-	_gravity = Config.get_value("bird_gravity", 800.0)
-	_jump_velocity = Config.get_value("bird_jump_velocity", 170.0)
-	_max_jump_time = Config.get_value("bird_max_jump_time", 0.2)
-	_fall_degress = Config.get_value("bird_fall_degress", 10.0)
-	_jump_degrees = Config.get_value("bird_jump_degress", -10.0)
-	_bird_scale = Config.get_value("bird_scale", 0.75)
+	_gravity = GameData.get_config("bird_gravity")
+	_jump_velocity = GameData.get_config("bird_jump_velocity")
+	_max_jump_time = GameData.get_config("bird_max_jump_time")
+	_fall_degress = GameData.get_config("bird_fall_degress")
+	_jump_degrees = GameData.get_config("bird_jump_degress")
+	_bird_scale = GameData.get_config("bird_scale")
+	_game_layer_scale = GameData.get_config("game_layer_scale")
+	timer.wait_time = _max_jump_time
+	scale = Vector2(_bird_scale, _bird_scale)
+
+
+func _on_config_changed(key: String, value: Variant) -> void:
+	match key:
+		"bird_gravity":
+			_change_gravity(value)
+		_:
+			pass
 
 
 func _on_timer_timeout() -> void:

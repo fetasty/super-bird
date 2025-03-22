@@ -1,12 +1,5 @@
 extends Node2D
 
-
-var volume_update: Callable:
-	set(value):
-		volume_update = value
-		if volume_update.is_valid():
-			volume_update.call(is_mute, audio_volume)
-
 var is_mute: bool = false
 var audio_volume: float = 1.0
 
@@ -21,20 +14,19 @@ var _is_play_effect: bool = true
 
 
 func _ready() -> void:
-	# load config
-	var mute = Config.get_value("audio_mute", false)
-	var volume = Config.get_value("audio_volume", 0.5)
+	# load saved data
+	var mute = GameData.get_data("audio_mute", false)
+	var volume = GameData.get_data("audio_volume", 0.5)
 	set_volume(volume)
 	set_mute(mute)
+	# listen data changes
+	GameData.data_changed.connect(_on_data_changed)
 
 
 func set_mute(mute: bool) -> void:
 	if is_mute == mute:
 		return
 	is_mute = mute
-	Config.set_value("audio_mute", mute)
-	if volume_update.is_valid():
-		volume_update.call(is_mute, audio_volume)
 	if is_mute:
 		welcom_audio.volume_linear = 0.0
 		background_audio.volume_linear = 0.0
@@ -51,19 +43,10 @@ func set_volume(value: float) -> void:
 	if is_equal_approx(value, audio_volume):
 		return
 	audio_volume = value
-	if value < 0.1:
-		if not is_mute:
-			set_mute(true)
-	else:
-		if is_mute:
-			set_mute(false)
-		Config.set_value("audio_volume", value)
-		welcom_audio.volume_linear = audio_volume
-		background_audio.volume_linear = audio_volume
-		jump_audio.volume_linear = audio_volume
-		hit_audio.volume_linear = audio_volume
-	if volume_update.is_valid():
-		volume_update.call(is_mute, audio_volume)
+	welcom_audio.volume_linear = audio_volume
+	background_audio.volume_linear = audio_volume
+	jump_audio.volume_linear = audio_volume
+	hit_audio.volume_linear = audio_volume
 
 
 func set_welcome_play(enable: bool) -> void:
@@ -92,6 +75,16 @@ func play_hit() -> void:
 	if is_mute or not _is_play_effect:
 		return
 	hit_audio.play()
+
+
+func _on_data_changed(key: String, value: Variant) -> void:
+	match key:
+		"audio_mute":
+			set_mute(value)
+		"audio_volume":
+			set_volume(value)
+		_:
+			pass
 
 
 func _on_welcom_audio_finished() -> void:

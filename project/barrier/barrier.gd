@@ -24,10 +24,12 @@ var _upper_size_max: int = 37
 var _upper_size: int = 20 # 随机
 var _arrived_score_pos: bool = false
 
+var _game_layer_scale: float = 2.0
 
 func _ready() -> void:
 	_load_config()
 	_rebuild_barrier()
+	GameData.config_changed.connect(_on_config_changed)
 
 
 func _physics_process(delta: float) -> void:
@@ -39,29 +41,29 @@ func _physics_process(delta: float) -> void:
 		queue_free()
 
 
-func change_speed(speed: float) -> void:
-	var tween = get_tree().create_tween()
-	tween.tween_property(self, "_move_speed", speed, 1.0)
+func _change_speed(speed: float) -> void:
+	_move_speed = speed
 
 
 func _load_config() -> void:
-	_move_speed = Config.get_value("barrier_speed", 120.0)
-	_score_pos_x = Config.get_value("barrier_score_pos", 288.0)
-	_release_pos_x = Config.get_value("barrier_release_pos", -10.0)
-	_passage_width = Config.get_value("barrier_passage_width", 60.0)
-	_upper_size_min = Config.get_value("barrier_upper_size_min", 3)
-	_upper_size_max = Config.get_value("barrier_upper_size_max", 37)
+	_move_speed = GameData.get_config("barrier_speed")
+	_game_layer_scale = GameData.get_config("game_layer_scale")
+	_score_pos_x = GameData.get_config("barrier_score_pos") * get_viewport_rect().size.x / _game_layer_scale
+	_release_pos_x = GameData.get_config("barrier_release_pos")
+	_passage_width = GameData.get_config("barrier_passage_width")
+	_upper_size_min = GameData.get_config("barrier_upper_size_min")
+	_upper_size_max = GameData.get_config("barrier_upper_size_max")
 
 
-## 重新随机构建一个障碍柱
+## rebuild barrier
 func _rebuild_barrier() -> void:
-	# 随机取一个上半部分柱子数量
+	# random upper part size
 	_upper_size = randi_range(_upper_size_min, _upper_size_max)
-	# 先删除以前的构建
+	# clear all barriers
 	for child in get_children():
 		child.queue_free()
 		remove_child(child)
-	# 构建上半部分柱子
+	# build upper part
 	for i in range(0, _upper_size - 1):
 		var body = BARRIER_BODY.instantiate()
 		body.name = "UpperBody%s" % i
@@ -72,15 +74,15 @@ func _rebuild_barrier() -> void:
 		head.name = "UpperHead"
 		head.position = Vector2(0, BODY_SIZE.y * (_upper_size - 1) + HEAD_SIZE.y * 0.5)
 		add_child(head)
-	# 计算下半部分柱子数量
-	var screen_size = get_viewport_rect().size * 0.5 # 放大2倍, 屏幕像素区域只有原来的1/2大小
+	# calculate lower part size
+	var screen_size = get_viewport_rect().size / _game_layer_scale
 	var lower_screen_size = screen_size.y - (BODY_SIZE.y * (_upper_size - 1) + HEAD_SIZE.y + _passage_width)
 	var lower_size = 0
 	if lower_screen_size >= HEAD_SIZE.y:
 		lower_size += 1
 		lower_screen_size -= HEAD_SIZE.y
 	lower_size += int(lower_screen_size / BODY_SIZE.y)
-	# 构建下半部分柱子
+	# build lower part
 	for i in range(0, lower_size - 1):
 		var body = BARRIER_BODY.instantiate()
 		body.name = "LowerBody%s" % i
@@ -91,7 +93,7 @@ func _rebuild_barrier() -> void:
 		head.name = "LowerHead"
 		head.position = Vector2(0, screen_size.y - BODY_SIZE.y * (lower_size - 1) - HEAD_SIZE.y * 0.5)
 		add_child(head)
-	# 构建碰撞盒
+	# build collision box
 	if _upper_size > 1:
 		var upper_body_box = BARRIER_HITBOX.instantiate()
 		upper_body_box.name = "UpperBodyBox"
@@ -116,3 +118,11 @@ func _rebuild_barrier() -> void:
 		lower_head_box.box_size = Vector2(HEAD_SIZE.x - 2, HEAD_SIZE.y - 2)
 		lower_head_box.position = Vector2(0, screen_size.y - BODY_SIZE.y * (lower_size - 1) - HEAD_SIZE.y * 0.5)
 		add_child(lower_head_box)
+
+
+func _on_config_changed(key: String, value: Variant) -> void:
+	match key:
+		"barrier_speed":
+			_change_speed(value)
+		_:
+			pass

@@ -16,6 +16,7 @@ transform = Transform2D(2, 0, 0, 2, 0, 0)
 [node name="Bird" parent="GameLayer" instance=ExtResource("2_0xm2m")]
 
 [node name="BarrierTimer" type="Timer" parent="GameLayer"]
+autostart = true
 
 [node name="Barriers" type="Node2D" parent="GameLayer"]
 
