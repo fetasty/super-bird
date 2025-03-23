@@ -1,0 +1,11 @@
+[gd_resource type="Resource" script_class="BirdResource" load_steps=3 format=3 uid="uid://fqm2bysynqex"]
+
+[ext_resource type="Script" uid="uid://dyn2c0dxntc4r" path="res://player/player_resource.gd" id="1_y333g"]
+[ext_resource type="Texture2D" uid="uid://bvy1egy1g7gnw" path="res://arts/chick.tres" id="2_ce0vb"]
+
+[resource]
+script = ExtResource("1_y333g")
+key = "chick"
+texture = ExtResource("2_ce0vb")
+scale = 1.2
+metadata/_custom_type_script = "uid://dyn2c0dxntc4r"

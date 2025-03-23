@@ -1,0 +1,11 @@
+[gd_resource type="Resource" script_class="BirdResource" load_steps=3 format=3 uid="uid://cn2ok80w1m72y"]
+
+[ext_resource type="Script" uid="uid://dyn2c0dxntc4r" path="res://player/player_resource.gd" id="1_dec8x"]
+[ext_resource type="Texture2D" uid="uid://bxr3xngyq4aok" path="res://arts/dog.tres" id="2_16m0t"]
+
+[resource]
+script = ExtResource("1_dec8x")
+key = "dog"
+texture = ExtResource("2_16m0t")
+scale = 0.7
+metadata/_custom_type_script = "uid://dyn2c0dxntc4r"

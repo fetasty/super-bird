@@ -1,0 +1,11 @@
+[gd_resource type="Resource" script_class="BirdResource" load_steps=3 format=3 uid="uid://d0740ewj8eld5"]
+
+[ext_resource type="Script" uid="uid://dyn2c0dxntc4r" path="res://player/player_resource.gd" id="1_8148h"]
+[ext_resource type="Texture2D" uid="uid://crdl4lh6xiyrd" path="res://arts/pig.tres" id="2_qmrv0"]
+
+[resource]
+script = ExtResource("1_8148h")
+key = "pig"
+texture = ExtResource("2_qmrv0")
+scale = 0.8
+metadata/_custom_type_script = "uid://dyn2c0dxntc4r"

@@ -172,6 +172,7 @@ func _on_level_changed(gravity: float, barrier_spawn_time: float, barrier_speed:
 func _on_barrier_timer_timeout() -> void:
 	var viewport_size = get_viewport_rect().size / _game_layer_scale
 	var barrier = BARRIER.instantiate()
+	barrier.resource = GameData.random_barrier_res()
 	barrier.arrived_score_pos.connect(_on_barrier_arrived_score_pos)
 	barrier.position = Vector2(viewport_size.x, 0)
 	barriers.add_child(barrier)

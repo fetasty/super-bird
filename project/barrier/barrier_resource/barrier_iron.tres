@@ -1,0 +1,13 @@
+[gd_resource type="Resource" script_class="BarrierResource" load_steps=4 format=3 uid="uid://c5seqhbutpuml"]
+
+[ext_resource type="Texture2D" uid="uid://xlddqpp5tkok" path="res://arts/iron_barrier_body.tres" id="1_w1bwy"]
+[ext_resource type="Texture2D" uid="uid://cmjlxpy5k5bk7" path="res://arts/iron_barrier_head.tres" id="2_f78be"]
+[ext_resource type="Script" uid="uid://dledm0cusdqc1" path="res://barrier/barrier_resource.gd" id="3_kltuc"]
+
+[resource]
+script = ExtResource("3_kltuc")
+key = "barrier_iron"
+body_texture = ExtResource("1_w1bwy")
+head_texture = ExtResource("2_f78be")
+rate = 0.5
+metadata/_custom_type_script = "uid://dledm0cusdqc1"

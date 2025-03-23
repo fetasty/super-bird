@@ -1,0 +1,13 @@
+[gd_resource type="Resource" script_class="BarrierResource" load_steps=4 format=3 uid="uid://bg2e7q605a7gd"]
+
+[ext_resource type="Texture2D" uid="uid://cyr7pykdpo5ix" path="res://arts/wood_barrier_body.tres" id="1_1rfsm"]
+[ext_resource type="Script" uid="uid://dledm0cusdqc1" path="res://barrier/barrier_resource.gd" id="1_saqgm"]
+[ext_resource type="Texture2D" uid="uid://dlgfuuq6eyafl" path="res://arts/wood_barrier_head.tres" id="2_f23yo"]
+
+[resource]
+script = ExtResource("1_saqgm")
+key = "barrier_wood"
+body_texture = ExtResource("1_1rfsm")
+head_texture = ExtResource("2_f23yo")
+rate = 0.3
+metadata/_custom_type_script = "uid://dledm0cusdqc1"

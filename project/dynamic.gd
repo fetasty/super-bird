@@ -30,7 +30,7 @@ func change_level(index: int) -> void:
 	Logger.info("Level changed: gravity(%s), barrier_spawn_time(%s), barrier_speed(%s)" % [gravity, barrier_spawn_time, barrier_speed])
 	GameData.set_config("barrier_speed", barrier_speed)
 	GameData.set_config("barrier_spawn_time", barrier_spawn_time)
-	GameData.set_config("bird_gravity", gravity)
+	GameData.set_config("gravity", gravity)
 
 
 func game_reset() -> void:

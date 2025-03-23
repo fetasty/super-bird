@@ -1,0 +1,7 @@
+[gd_resource type="AtlasTexture" load_steps=2 format=3 uid="uid://bvy1egy1g7gnw"]
+
+[ext_resource type="Texture2D" uid="uid://dh6b4t768cnky" path="res://arts/super-bird.png" id="1_2pfl2"]
+
+[resource]
+atlas = ExtResource("1_2pfl2")
+region = Rect2(10, 42, 14, 12)

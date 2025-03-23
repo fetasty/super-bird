@@ -1,0 +1,13 @@
+[gd_resource type="Resource" script_class="BarrierResource" load_steps=4 format=3 uid="uid://bavr2pvaona8f"]
+
+[ext_resource type="Texture2D" uid="uid://dlm2ffqoiy4ty" path="res://arts/grass_barrier_body.tres" id="1_ehdaa"]
+[ext_resource type="Script" uid="uid://dledm0cusdqc1" path="res://barrier/barrier_resource.gd" id="1_kpeeq"]
+[ext_resource type="Texture2D" uid="uid://bm3dhiue085v1" path="res://arts/grass_barrier_head.tres" id="2_26gl0"]
+
+[resource]
+script = ExtResource("1_kpeeq")
+key = "barrier_grass"
+body_texture = ExtResource("1_ehdaa")
+head_texture = ExtResource("2_26gl0")
+rate = 0.2
+metadata/_custom_type_script = "uid://dledm0cusdqc1"

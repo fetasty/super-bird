@@ -1,12 +1,13 @@
 extends Node2D
 
-const BARRIER_BODY: PackedScene = preload("res://barrier/barrier_body.tscn")
-const BARRIER_HEAD: PackedScene = preload("res://barrier/barrier_head.tscn")
 const BARRIER_HITBOX: PackedScene = preload("res://barrier/barrier_hitbox.tscn")
 const BODY_SIZE: Vector2 = Vector2(17, 5)
 const HEAD_SIZE: Vector2 = Vector2(28, 9)
 
 signal arrived_score_pos
+
+## init before add to scene tree
+var resource: BarrierResource = null
 
 # 移动速度
 var _move_speed: float = 150
@@ -65,12 +66,14 @@ func _rebuild_barrier() -> void:
 		remove_child(child)
 	# build upper part
 	for i in range(0, _upper_size - 1):
-		var body = BARRIER_BODY.instantiate()
+		var body = Sprite2D.new()
+		body.texture = resource.body_texture
 		body.name = "UpperBody%s" % i
 		body.position = Vector2(0, BODY_SIZE.y * (i + 0.5))
 		add_child(body)
 	if _upper_size > 0:
-		var head = BARRIER_HEAD.instantiate()
+		var head = Sprite2D.new()
+		head.texture = resource.head_texture
 		head.name = "UpperHead"
 		head.position = Vector2(0, BODY_SIZE.y * (_upper_size - 1) + HEAD_SIZE.y * 0.5)
 		add_child(head)
@@ -84,12 +87,14 @@ func _rebuild_barrier() -> void:
 	lower_size += int(lower_screen_size / BODY_SIZE.y)
 	# build lower part
 	for i in range(0, lower_size - 1):
-		var body = BARRIER_BODY.instantiate()
+		var body = Sprite2D.new()
+		body.texture = resource.body_texture
 		body.name = "LowerBody%s" % i
 		body.position = Vector2(0, screen_size.y - BODY_SIZE.y * (i + 0.5))
 		add_child(body)
 	if lower_size > 0:
-		var head = BARRIER_HEAD.instantiate()
+		var head = Sprite2D.new()
+		head.texture = resource.head_texture
 		head.name = "LowerHead"
 		head.position = Vector2(0, screen_size.y - BODY_SIZE.y * (lower_size - 1) - HEAD_SIZE.y * 0.5)
 		add_child(head)

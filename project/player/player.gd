@@ -14,7 +14,7 @@ var _game_layer_scale: float = 2.0
 
 var _fall_degress = 10.0
 var _jump_degrees = -10.0
-var _bird_scale = 0.75
+var _bird_scale = 0.75 # TODO
 
 var _velocity = 0.0
 var _is_jumping = false
@@ -67,12 +67,12 @@ func _change_gravity(gravity: float) -> void:
 
 
 func _load_config() -> void:
-	_gravity = GameData.get_config("bird_gravity")
-	_jump_velocity = GameData.get_config("bird_jump_velocity")
-	_max_jump_time = GameData.get_config("bird_max_jump_time")
-	_fall_degress = GameData.get_config("bird_fall_degress")
-	_jump_degrees = GameData.get_config("bird_jump_degress")
-	_bird_scale = GameData.get_config("bird_scale")
+	_gravity = GameData.get_config("gravity")
+	_jump_velocity = GameData.get_config("jump_velocity")
+	_max_jump_time = GameData.get_config("max_jump_time")
+	_fall_degress = GameData.get_config("fall_degress")
+	_jump_degrees = GameData.get_config("jump_degress")
+	# _bird_scale = GameData.get_config("bird_scale") # TODO
 	_game_layer_scale = GameData.get_config("game_layer_scale")
 	timer.wait_time = _max_jump_time
 	scale = Vector2(_bird_scale, _bird_scale)
@@ -80,7 +80,7 @@ func _load_config() -> void:
 
 func _on_config_changed(key: String, value: Variant) -> void:
 	match key:
-		"bird_gravity":
+		"gravity":
 			_change_gravity(value)
 		_:
 			pass
