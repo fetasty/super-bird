@@ -1,0 +1,31 @@
+[gd_scene load_steps=3 format=3 uid="uid://bi6xmfg8qtuq0"]
+
+[ext_resource type="Script" uid="uid://6wi76e5euney" path="res://role_item.gd" id="1_nh2lv"]
+[ext_resource type="Texture2D" uid="uid://bvy1egy1g7gnw" path="res://arts/chick.tres" id="1_wrf4w"]
+
+[node name="RoleItem" type="VBoxContainer"]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -25.0
+offset_top = -39.0
+offset_right = 25.0
+offset_bottom = 39.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 0
+theme_override_constants/separation = 5
+script = ExtResource("1_nh2lv")
+
+[node name="TextureRect" type="TextureRect" parent="."]
+custom_minimum_size = Vector2(50, 50)
+layout_mode = 2
+texture = ExtResource("1_wrf4w")
+
+[node name="Label" type="Label" parent="."]
+layout_mode = 2
+text = "chick"
+
+[connection signal="gui_input" from="." to="." method="_on_gui_input"]

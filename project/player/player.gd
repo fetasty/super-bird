@@ -1,4 +1,4 @@
-extends Sprite2D
+extends Node2D
 
 ## 发生了碰撞
 signal collided
@@ -14,11 +14,11 @@ var _game_layer_scale: float = 2.0
 
 var _fall_degress = 10.0
 var _jump_degrees = -10.0
-var _bird_scale = 0.75 # TODO
 
 var _velocity = 0.0
 var _is_jumping = false
 
+@onready var sprite_2d: Sprite2D = $Sprite2D
 @onready var timer: Timer = $Timer
 
 
@@ -72,10 +72,12 @@ func _load_config() -> void:
 	_max_jump_time = GameData.get_config("max_jump_time")
 	_fall_degress = GameData.get_config("fall_degress")
 	_jump_degrees = GameData.get_config("jump_degress")
-	# _bird_scale = GameData.get_config("bird_scale") # TODO
 	_game_layer_scale = GameData.get_config("game_layer_scale")
+	var res := GameData.last_selected_player_res()
+	var res_scale = res.scale
 	timer.wait_time = _max_jump_time
-	scale = Vector2(_bird_scale, _bird_scale)
+	sprite_2d.texture = res.texture
+	sprite_2d.scale = Vector2(res_scale, res_scale)
 
 
 func _on_config_changed(key: String, value: Variant) -> void:

@@ -1,4 +1,4 @@
-class_name BirdResource
+class_name PlayerResource
 extends Resource
 
 @export var key: String

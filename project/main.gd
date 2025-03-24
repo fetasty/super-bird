@@ -49,7 +49,7 @@ var game_state: int = STATE_WELCOME:
 var _game_layer_scale: float = 2.0
 
 @onready var game_layer: CanvasLayer = $GameLayer
-@onready var bird: Sprite2D = $GameLayer/Bird
+@onready var player: Node2D = $GameLayer/Player
 @onready var barrier_timer: Timer = $GameLayer/BarrierTimer
 @onready var barriers: Node2D = $GameLayer/Barriers
 @onready var menu: Control = $UILayer/Menu
@@ -90,7 +90,7 @@ func _game_init() -> void:
 	# reset game scene and game data
 	_reset_game()
 	# bind signals
-	bird.collided.connect(_on_bird_collided)
+	player.collided.connect(_on_player_collided)
 	GameData.config_changed.connect(_on_config_changed)
 	GameData.data_changed.connect(_on_data_changed)
 	# init game state
@@ -104,11 +104,11 @@ func _reset_game() -> void:
 	for child in barriers.get_children():
 		barriers.remove_child(child)
 		child.queue_free()
-	# reset bird position
+	# reset player position
 	var viewport_size = get_viewport_rect().size / _game_layer_scale
-	bird.position = viewport_size * 0.5
-	# reset bird state
-	bird.reset()
+	player.position = viewport_size * 0.5
+	# reset player state
+	player.reset()
 	# reset score
 	score = 0
 	# reset dynamic difficulty
@@ -154,9 +154,9 @@ func _on_data_changed(key: String, value: Variant) -> void:
 			pass
 
 
-func _on_bird_collided() -> void:
+func _on_player_collided() -> void:
 	game_state = STATE_WELCOME
-	Logger.info("Bird collided!!!")
+	Logger.info("Player collided!!!")
 
 
 func _on_barrier_arrived_score_pos() -> void:
@@ -206,3 +206,7 @@ func _on_h_slider_drag_ended(value_changed: bool) -> void:
 			GameData.set_data("audio_mute", true)
 		else:
 			GameData.set_data("audio_mute", false)
+
+
+func _on_role_pressed() -> void:
+	pass # Replace with function body.

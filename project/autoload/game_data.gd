@@ -31,7 +31,8 @@ const _SAVE_FILE_PATH = "user://save.cfg"
 const _GAME_SECTION = "game"
 
 var _game_config: Dictionary
-var _barrier_data: Dictionary
+var _barrier_res: Dictionary
+var _player_res: Dictionary
 var _save_file = ConfigFile.new()
 var _save_data_updated: bool = false
 
@@ -39,11 +40,13 @@ var _save_data_updated: bool = false
 func _ready() -> void:
 	reset_config()
 	_load_data()
-	_init_barrier_data()
+	_init_barrier_res()
+	_init_player_res()
 
 
 func _exit_tree() -> void:
-	save_data()
+	if _save_data_updated:
+		save_data()
 
 
 func reset_config() -> void:
@@ -84,17 +87,26 @@ func save_data() -> void:
 
 func random_barrier_res() -> BarrierResource:
 	var max_rate = 0.0
-	for key in _barrier_data:
-		var rate = _barrier_data[key].rate
+	for key in _barrier_res:
+		var rate = _barrier_res[key].rate
 		max_rate += rate
 	var rand = randf_range(0.0, max_rate)
-	for key in _barrier_data:
-		var rate = _barrier_data[key].rate
+	for key in _barrier_res:
+		var rate = _barrier_res[key].rate
 		rand -= rate
 		if rand <= 0.0:
-			return _barrier_data[key]
+			return _barrier_res[key]
 	assert(false, "Invalid barrier res.")
 	return null
+
+
+func all_player_res() -> Dictionary:
+	return _player_res
+
+
+func last_selected_player_res() -> PlayerResource:
+	var key = get_data("last_player_role")
+	return _player_res[key]
 
 
 func _load_data() -> void:
@@ -102,20 +114,28 @@ func _load_data() -> void:
 		var err = _save_file.load(_SAVE_FILE_PATH)
 		if err != OK:
 			Logger.error("Load save data failed!", "main", err)
-	else:
-		Logger.info("Save data file not exists, create new one.")
-		for key in _DEFAULT_DATA:
+	for key in _DEFAULT_DATA:
+		if not _save_file.has_section_key(_GAME_SECTION, key):
 			_save_file.set_value(_GAME_SECTION, key, _DEFAULT_DATA[key])
-		save_data()
+			_save_data_updated = true
 
 
-func _init_barrier_data() -> void:
-	var base_dir = "res://barrier/barrier_resource"
+func _init_barrier_res() -> void:
+	var base_dir = "res://barrier/resource"
 	var barrier_res_arr = ResourceLoader.list_directory(base_dir)
 	for res_path in barrier_res_arr:
 		var path = base_dir + "/" + res_path
-		var barrier_res := ResourceLoader.load(path) as BarrierResource
-		_barrier_data[barrier_res.key] = barrier_res
+		var res := ResourceLoader.load(path) as BarrierResource
+		_barrier_res[res.key] = res
+
+
+func _init_player_res() -> void:
+	var base_dir = "res://player/resource"
+	var player_res_arr = ResourceLoader.list_directory(base_dir)
+	for res_path in player_res_arr:
+		var path = base_dir + "/" + res_path
+		var res := ResourceLoader.load(path) as PlayerResource
+		_player_res[res.key] = res
 
 
 func _create_autosave_timer() -> void:
