@@ -1,10 +1,9 @@
-[gd_scene load_steps=8 format=3 uid="uid://bldvd32nth1xc"]
+[gd_scene load_steps=7 format=3 uid="uid://bldvd32nth1xc"]
 
 [ext_resource type="Script" uid="uid://dse56namej74b" path="res://main.gd" id="1_0xm2m"]
 [ext_resource type="PackedScene" uid="uid://mntokg6ai40l" path="res://player/player.tscn" id="2_0xm2m"]
 [ext_resource type="Texture2D" uid="uid://cuvkyvsnmuuto" path="res://arts/icons/volume-3.svg" id="3_1bvp3"]
 [ext_resource type="Texture2D" uid="uid://es8simpmj6bg" path="res://arts/icons/volume-x.svg" id="4_lquwl"]
-[ext_resource type="PackedScene" uid="uid://bi6xmfg8qtuq0" path="res://role_item.tscn" id="5_272bh"]
 [ext_resource type="Script" uid="uid://c7jg7opna8hnr" path="res://dynamic.gd" id="5_lquwl"]
 [ext_resource type="Texture2D" uid="uid://cct003f8vsk1i" path="res://arts/shield.tres" id="6_272bh"]
 
@@ -209,7 +208,7 @@ grow_horizontal = 2
 grow_vertical = 2
 color = Color(0, 0, 0, 0.862745)
 
-[node name="HBoxContainer" type="HBoxContainer" parent="UILayer/Menu/RoleSelect"]
+[node name="RoleItems" type="HBoxContainer" parent="UILayer/Menu/RoleSelect"]
 layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5
@@ -224,9 +223,6 @@ grow_horizontal = 2
 grow_vertical = 2
 theme_override_constants/separation = 50
 alignment = 1
-
-[node name="RoleItem" parent="UILayer/Menu/RoleSelect/HBoxContainer" instance=ExtResource("5_272bh")]
-layout_mode = 2
 
 [node name="TextureRect" type="TextureRect" parent="UILayer/Menu/RoleSelect"]
 custom_minimum_size = Vector2(70, 70)
@@ -248,3 +244,4 @@ script = ExtResource("5_lquwl")
 [connection signal="pressed" from="UILayer/Menu/VBoxContainer/VBoxContainer/Exit" to="." method="_on_exit_pressed"]
 [connection signal="toggled" from="UILayer/Menu/VolumeContainer/MuteButton" to="." method="_on_mute_button_toggled"]
 [connection signal="drag_ended" from="UILayer/Menu/VolumeContainer/VolumeSlider" to="." method="_on_h_slider_drag_ended"]
+[connection signal="gui_input" from="UILayer/Menu/RoleSelect/ColorRect" to="." method="_on_role_select_back_gui_input"]

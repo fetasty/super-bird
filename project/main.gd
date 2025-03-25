@@ -2,6 +2,7 @@ extends Node2D
 
 
 const BARRIER = preload("res://barrier/barrier.tscn")
+const ROLE_ITEM = preload("res://role_item.tscn")
 
 enum { STATE_WELCOME, STATE_PLAYING, STATE_PAUSE }
 
@@ -63,6 +64,8 @@ var _game_layer_scale: float = 2.0
 @onready var mute_button: TextureButton = $UILayer/Menu/VolumeContainer/MuteButton
 @onready var volume_slider: HSlider = $UILayer/Menu/VolumeContainer/VolumeSlider
 @onready var dynamic: Node2D = $Dynamic
+@onready var role_select: Control = $UILayer/Menu/RoleSelect
+@onready var role_items: HBoxContainer = $UILayer/Menu/RoleSelect/RoleItems
 
 
 func _ready() -> void:
@@ -89,6 +92,12 @@ func _game_init() -> void:
 	version_label.text = version.version_str()
 	# reset game scene and game data
 	_reset_game()
+	# roles
+	var res_dict := GameData.player_res_dict()
+	for k in res_dict:
+		var item := ROLE_ITEM.instantiate()
+		item.role_res = res_dict[k]
+		role_items.add_child(item)
 	# bind signals
 	player.collided.connect(_on_player_collided)
 	GameData.config_changed.connect(_on_config_changed)
@@ -209,4 +218,9 @@ func _on_h_slider_drag_ended(value_changed: bool) -> void:
 
 
 func _on_role_pressed() -> void:
-	pass # Replace with function body.
+	role_select.visible = true
+
+
+func _on_role_select_back_gui_input(event: InputEvent) -> void:
+	if event is InputEventMouseButton and event.is_pressed():
+		role_select.visible = false

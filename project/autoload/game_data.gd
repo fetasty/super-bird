@@ -100,7 +100,7 @@ func random_barrier_res() -> BarrierResource:
 	return null
 
 
-func all_player_res() -> Dictionary:
+func player_res_dict() -> Dictionary:
 	return _player_res
 
 
