@@ -66,6 +66,7 @@ var _game_layer_scale: float = 2.0
 @onready var dynamic: Node2D = $Dynamic
 @onready var role_select: Control = $UILayer/Menu/RoleSelect
 @onready var role_items: HBoxContainer = $UILayer/Menu/RoleSelect/RoleItems
+@onready var selected_border: TextureRect = $UILayer/Menu/RoleSelect/SelectedBorder
 
 
 func _ready() -> void:
@@ -97,6 +98,7 @@ func _game_init() -> void:
 	for k in res_dict:
 		var item := ROLE_ITEM.instantiate()
 		item.role_res = res_dict[k]
+		item.role_selected.connect(_on_role_selected)
 		role_items.add_child(item)
 	# bind signals
 	player.collided.connect(_on_player_collided)
@@ -161,6 +163,10 @@ func _on_data_changed(key: String, value: Variant) -> void:
 			volume_slider.set_value_no_signal(value)
 		_:
 			pass
+
+
+func _on_role_selected(_key: String, rect_pos: Vector2) -> void:
+	selected_border.global_position = rect_pos - (selected_border.size * 0.5)
 
 
 func _on_player_collided() -> void:

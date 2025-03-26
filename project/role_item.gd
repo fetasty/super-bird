@@ -1,6 +1,6 @@
 extends VBoxContainer
 
-signal role_selected(key: String)
+signal role_selected(key: String, rect_pos: Vector2)
 
 ## Must be setted before adding to scenetree
 var role_res: PlayerResource
@@ -17,4 +17,4 @@ func _ready() -> void:
 func _on_gui_input(event: InputEvent) -> void:
 	if event is InputEventMouseButton and event.is_pressed():
 		GameData.set_data("last_player_role", role_res.key)
-		role_selected.emit(role_res.key)
+		role_selected.emit(role_res.key, texture_rect.global_position + texture_rect.size * 0.5)
