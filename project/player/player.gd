@@ -25,6 +25,7 @@ var _is_jumping = false
 func _ready() -> void:
 	_load_config()
 	GameData.config_changed.connect(_on_config_changed)
+	GameData.data_changed.connect(_on_data_changed)
 
 
 func _physics_process(delta: float) -> void:
@@ -73,9 +74,13 @@ func _load_config() -> void:
 	_fall_degress = GameData.get_config("fall_degress")
 	_jump_degrees = GameData.get_config("jump_degress")
 	_game_layer_scale = GameData.get_config("game_layer_scale")
+	timer.wait_time = _max_jump_time
+	_load_res()
+
+
+func _load_res() -> void:
 	var res := GameData.last_selected_player_res()
 	var res_scale = res.scale
-	timer.wait_time = _max_jump_time
 	sprite_2d.texture = res.texture
 	sprite_2d.scale = Vector2(res_scale, res_scale)
 
@@ -84,6 +89,14 @@ func _on_config_changed(key: String, value: Variant) -> void:
 	match key:
 		"gravity":
 			_change_gravity(value)
+		_:
+			pass
+
+
+func _on_data_changed(key: String, _value: Variant) -> void:
+	match key:
+		"last_player_role":
+			_load_res()
 		_:
 			pass
 
