@@ -74,6 +74,8 @@ func play_jump() -> void:
 func play_hit() -> void:
 	if is_mute or not _is_play_effect:
 		return
+	if hit_audio.playing:
+		return
 	hit_audio.play()
 
 

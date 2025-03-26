@@ -7,7 +7,7 @@ resource_local_to_scene = true
 size = Vector2(0, 0)
 
 [node name="BarrierHitbox" type="Area2D"]
-collision_mask = 0
+collision_mask = 2
 script = ExtResource("1_yf2nu")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]

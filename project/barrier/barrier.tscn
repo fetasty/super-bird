@@ -4,3 +4,7 @@
 
 [node name="Barrier" type="Node2D"]
 script = ExtResource("1_lfb78")
+
+[node name="UpperParts" type="Node2D" parent="."]
+
+[node name="LowerParts" type="Node2D" parent="."]

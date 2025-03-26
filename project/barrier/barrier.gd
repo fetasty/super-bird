@@ -27,6 +27,10 @@ var _arrived_score_pos: bool = false
 
 var _game_layer_scale: float = 2.0
 
+@onready var upper_parts: Node2D = $UpperParts
+@onready var lower_parts: Node2D = $LowerParts
+
+
 func _ready() -> void:
 	_load_config()
 	_rebuild_barrier()
@@ -61,22 +65,25 @@ func _rebuild_barrier() -> void:
 	# random upper part size
 	_upper_size = randi_range(_upper_size_min, _upper_size_max)
 	# clear all barriers
-	for child in get_children():
+	for child in upper_parts.get_children():
 		child.queue_free()
-		remove_child(child)
+		upper_parts.remove_child(child)
+	for child in lower_parts.get_children():
+		child.queue_free()
+		lower_parts.remove_child(child)
 	# build upper part
 	for i in range(0, _upper_size - 1):
 		var body = Sprite2D.new()
 		body.texture = resource.body_texture
 		body.name = "UpperBody%s" % i
 		body.position = Vector2(0, BODY_SIZE.y * (i + 0.5))
-		add_child(body)
+		upper_parts.add_child(body)
 	if _upper_size > 0:
 		var head = Sprite2D.new()
 		head.texture = resource.head_texture
 		head.name = "UpperHead"
 		head.position = Vector2(0, BODY_SIZE.y * (_upper_size - 1) + HEAD_SIZE.y * 0.5)
-		add_child(head)
+		upper_parts.add_child(head)
 	# calculate lower part size
 	var screen_size = get_viewport_rect().size / _game_layer_scale
 	var lower_screen_size = screen_size.y - (BODY_SIZE.y * (_upper_size - 1) + HEAD_SIZE.y + _passage_width)
@@ -91,38 +98,46 @@ func _rebuild_barrier() -> void:
 		body.texture = resource.body_texture
 		body.name = "LowerBody%s" % i
 		body.position = Vector2(0, screen_size.y - BODY_SIZE.y * (i + 0.5))
-		add_child(body)
+		lower_parts.add_child(body)
 	if lower_size > 0:
 		var head = Sprite2D.new()
 		head.texture = resource.head_texture
 		head.name = "LowerHead"
 		head.position = Vector2(0, screen_size.y - BODY_SIZE.y * (lower_size - 1) - HEAD_SIZE.y * 0.5)
-		add_child(head)
+		lower_parts.add_child(head)
 	# build collision box
 	if _upper_size > 1:
 		var upper_body_box = BARRIER_HITBOX.instantiate()
 		upper_body_box.name = "UpperBodyBox"
 		upper_body_box.box_size = Vector2(BODY_SIZE.x - 2, BODY_SIZE.y * (_upper_size - 1))
 		upper_body_box.position = Vector2(0, upper_body_box.box_size.y * 0.5)
-		add_child(upper_body_box)
+		upper_body_box.set_meta("type", resource.key)
+		upper_body_box.area_entered.connect(_on_upper_part_collided)
+		upper_parts.add_child(upper_body_box)
 	if _upper_size > 0:
 		var upper_head_box = BARRIER_HITBOX.instantiate()
 		upper_head_box.name = "UpperHeadBox"
 		upper_head_box.box_size = Vector2(HEAD_SIZE.x - 2, HEAD_SIZE.y - 2)
 		upper_head_box.position = Vector2(0, BODY_SIZE.y * (_upper_size - 1) + HEAD_SIZE.y * 0.5)
-		add_child(upper_head_box)
+		upper_head_box.set_meta("type", resource.key)
+		upper_head_box.area_entered.connect(_on_upper_part_collided)
+		upper_parts.add_child(upper_head_box)
 	if lower_size > 1:
 		var lower_body_box = BARRIER_HITBOX.instantiate()
 		lower_body_box.name = "LowerBodyBox"
 		lower_body_box.box_size = Vector2(BODY_SIZE.x - 2, BODY_SIZE.y * (lower_size - 1))
 		lower_body_box.position = Vector2(0, screen_size.y - lower_body_box.box_size.y * 0.5)
-		add_child(lower_body_box)
+		lower_body_box.set_meta("type", resource.key)
+		lower_body_box.area_entered.connect(_on_lower_part_collided)
+		lower_parts.add_child(lower_body_box)
 	if lower_size > 0:
 		var lower_head_box = BARRIER_HITBOX.instantiate()
 		lower_head_box.name = "LowerHeadBox"
 		lower_head_box.box_size = Vector2(HEAD_SIZE.x - 2, HEAD_SIZE.y - 2)
 		lower_head_box.position = Vector2(0, screen_size.y - BODY_SIZE.y * (lower_size - 1) - HEAD_SIZE.y * 0.5)
-		add_child(lower_head_box)
+		lower_head_box.set_meta("type", resource.key)
+		lower_head_box.area_entered.connect(_on_lower_part_collided)
+		lower_parts.add_child(lower_head_box)
 
 
 func _on_config_changed(key: String, value: Variant) -> void:
@@ -131,3 +146,29 @@ func _on_config_changed(key: String, value: Variant) -> void:
 			_change_speed(value)
 		_:
 			pass
+
+
+func _on_upper_part_collided(_area: Area2D) -> void:
+	Logger.info("Upper part collided!")
+	# TODO 从GameData中获取player的buff状态
+	match resource.key:
+		"barrier_iron":
+			pass
+		"barrier_wood":
+			pass
+		"barrier_grass":
+			for child in upper_parts.get_children():
+				child.queue_free()
+
+
+func _on_lower_part_collided(_area: Area2D) -> void:
+	Logger.info("Lower part collided!")
+	# TODO 从GameData中获取player的buff状态
+	match resource.key:
+		"barrier_iron":
+			pass
+		"barrier_wood":
+			pass
+		"barrier_grass":
+			for child in lower_parts.get_children():
+				child.queue_free()

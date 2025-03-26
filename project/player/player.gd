@@ -105,6 +105,16 @@ func _on_timer_timeout() -> void:
 	_is_jumping = false
 
 
-func _on_area_2d_area_entered(_area: Area2D) -> void:
-	collided.emit()
+func _on_area_2d_area_entered(area: Area2D) -> void:
 	AudioPlayer.play_hit()
+	var area_type = area.get_meta("type", "unknown")
+	match area_type:
+		"barrier_iron":
+			collided.emit()
+		"barrier_wood":
+			# TODO 判断buff状态, Buff数据存放在GameData
+			collided.emit()
+		"barrier_grass":
+			pass
+		_:
+			pass
