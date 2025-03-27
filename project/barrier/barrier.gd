@@ -3,6 +3,7 @@ extends Node2D
 const BARRIER_HITBOX: PackedScene = preload("res://barrier/barrier_hitbox.tscn")
 const BODY_SIZE: Vector2 = Vector2(17, 5)
 const HEAD_SIZE: Vector2 = Vector2(28, 9)
+const BREAK_PARTICAL = preload("res://barrier/break_partical.tscn")
 
 signal arrived_score_pos
 
@@ -157,6 +158,10 @@ func _on_upper_part_collided(_area: Area2D) -> void:
 		"barrier_wood":
 			pass
 		"barrier_grass":
+			var partical = BREAK_PARTICAL.instantiate()
+			add_child(partical)
+			partical.global_position = _area.global_position
+			partical.restart()
 			for child in upper_parts.get_children():
 				child.queue_free()
 
@@ -170,5 +175,9 @@ func _on_lower_part_collided(_area: Area2D) -> void:
 		"barrier_wood":
 			pass
 		"barrier_grass":
+			var partical = BREAK_PARTICAL.instantiate()
+			add_child(partical)
+			partical.global_position = _area.global_position
+			partical.restart()
 			for child in lower_parts.get_children():
 				child.queue_free()

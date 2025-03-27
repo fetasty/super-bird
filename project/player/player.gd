@@ -20,6 +20,9 @@ var _is_jumping = false
 
 @onready var sprite_2d: Sprite2D = $Sprite2D
 @onready var timer: Timer = $Timer
+@onready var saw_buff: Sprite2D = $SawBuff
+@onready var double_buff: Sprite2D = $DoubleBuff
+@onready var shield_buff: Sprite2D = $ShieldBuff
 
 
 func _ready() -> void:
@@ -28,15 +31,21 @@ func _ready() -> void:
 	GameData.data_changed.connect(_on_data_changed)
 
 
+func _process(delta: float) -> void:
+	saw_buff.rotation_degrees += delta * 360.0
+	if saw_buff.rotation_degrees > 360.0:
+		saw_buff.rotation_degrees -= 360.0
+
+
 func _physics_process(delta: float) -> void:
 	if _is_jumping:
 		_velocity = -_jump_velocity
 	else:
 		_velocity += _gravity * delta
 	if _velocity > 0:
-		rotation_degrees = _fall_degress
+		sprite_2d.rotation_degrees = _fall_degress
 	else:
-		rotation_degrees = _jump_degrees
+		sprite_2d.rotation_degrees = _jump_degrees
 	position.y += _velocity * delta
 	if position.y < -10:
 		collided.emit()

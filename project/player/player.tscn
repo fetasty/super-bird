@@ -1,6 +1,10 @@
-[gd_scene load_steps=3 format=3 uid="uid://mntokg6ai40l"]
+[gd_scene load_steps=7 format=3 uid="uid://mntokg6ai40l"]
 
 [ext_resource type="Script" uid="uid://bvcfmo2qiu10s" path="res://player/player.gd" id="1_7k2hk"]
+[ext_resource type="Texture2D" uid="uid://bxr3xngyq4aok" path="res://arts/dog.tres" id="2_rkbax"]
+[ext_resource type="Texture2D" uid="uid://bdw10ygjd5sf4" path="res://arts/double_score_buff.tres" id="3_g1dw6"]
+[ext_resource type="Texture2D" uid="uid://bnktyvjryop38" path="res://arts/saw.tres" id="4_yw30f"]
+[ext_resource type="Texture2D" uid="uid://cct003f8vsk1i" path="res://arts/shield.tres" id="5_qjkh3"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_qlr2y"]
 radius = 4.5
@@ -8,7 +12,24 @@ radius = 4.5
 [node name="Player" type="Node2D"]
 script = ExtResource("1_7k2hk")
 
+[node name="SawBuff" type="Sprite2D" parent="."]
+visible = false
+scale = Vector2(0.5, 0.5)
+texture = ExtResource("4_yw30f")
+
 [node name="Sprite2D" type="Sprite2D" parent="."]
+texture = ExtResource("2_rkbax")
+
+[node name="ShieldBuff" type="Sprite2D" parent="."]
+visible = false
+scale = Vector2(0.5, 0.5)
+texture = ExtResource("5_qjkh3")
+
+[node name="DoubleBuff" type="Sprite2D" parent="."]
+visible = false
+position = Vector2(0, -15)
+scale = Vector2(0.4, 0.4)
+texture = ExtResource("3_g1dw6")
 
 [node name="Area2D" type="Area2D" parent="."]
 collision_layer = 2
