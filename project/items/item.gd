@@ -1,6 +1,6 @@
 class_name Item extends Node2D
 
-signal item_collided(buff: int)
+signal collided(buff: int)
 
 var res: ItemResource
 
@@ -14,8 +14,8 @@ func _ready() -> void:
 	sprite_2d.scale = Vector2(res.scale, res.scale)
 
 
-func _on_area_2d_area_entered(_area: Area2D) -> void:
-	if not _collided:
+func _on_area_2d_area_entered(area: Area2D) -> void:
+	if not _collided and area.has_meta("player"):
 		_collided = true
-		item_collided.emit(res.buff)
+		collided.emit(res.buff)
 		queue_free()

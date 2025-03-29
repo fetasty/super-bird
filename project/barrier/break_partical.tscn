@@ -8,7 +8,7 @@ direction = Vector3(0, -1, 0)
 spread = 180.0
 initial_velocity_max = 150.0
 gravity = Vector3(0, 280, 0)
-color = Color(0.666377, 0.491546, 0, 1)
+color = Color(0.434516, 0.470419, 0.228519, 1)
 
 [node name="BreakPartical" type="GPUParticles2D"]
 emitting = false

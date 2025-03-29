@@ -96,12 +96,12 @@ func _game_init() -> void:
 	# roles
 	var res_dict := GameData.player_res_dict()
 	for k in res_dict:
-		var item := ROLE_ITEM.instantiate()
-		item.role_res = res_dict[k]
-		item.role_selected.connect(_on_role_selected)
-		role_items.add_child(item)
+		var role := ROLE_ITEM.instantiate()
+		role.role_res = res_dict[k]
+		role.selected_border = selected_border
+		role_items.add_child(role)
 	# bind signals
-	player.collided.connect(_on_player_collided)
+	player.player_collided_with_wall.connect(_on_player_collided)
 	GameData.config_changed.connect(_on_config_changed)
 	GameData.data_changed.connect(_on_data_changed)
 	# init game state
@@ -147,6 +147,12 @@ func _resume_game() -> void:
 	game_layer.process_mode = Node.PROCESS_MODE_INHERIT
 
 
+func _player_add_score(add_score: int) -> void:
+	var double: bool = player.buff_status["double_score"]
+	score += add_score * 2 if double else add_score
+	Logger.info("Add score! Total score: %s" % score)
+
+
 func _on_config_changed(key: String, value: Variant) -> void:
 	match key:
 		"barrier_spawn_time":
@@ -165,18 +171,24 @@ func _on_data_changed(key: String, value: Variant) -> void:
 			pass
 
 
-func _on_role_selected(_key: String, rect_pos: Vector2) -> void:
-	selected_border.global_position = rect_pos - (selected_border.size * 0.5)
-
-
 func _on_player_collided() -> void:
 	game_state = STATE_WELCOME
+	AudioPlayer.play_hit()
 	Logger.info("Player collided!!!")
 
 
 func _on_barrier_arrived_score_pos() -> void:
-	score += 1
-	Logger.info("Add score! Total score: %s" % score)
+	_player_add_score(1)
+
+
+func _on_barrier_broken(broken_score: int) -> void:
+	_player_add_score(broken_score)
+	AudioPlayer.play_crack()
+
+
+func _on_item_collided(buff: String) -> void:
+	player.add_buff(buff)
+	AudioPlayer.play_item()
 
 
 func _on_level_changed(gravity: float, barrier_spawn_time: float, barrier_speed: float) -> void:
@@ -189,6 +201,9 @@ func _on_barrier_timer_timeout() -> void:
 	var barrier = BARRIER.instantiate()
 	barrier.resource = GameData.random_barrier_res()
 	barrier.arrived_score_pos.connect(_on_barrier_arrived_score_pos)
+	barrier.player_collided_with_barrier.connect(_on_player_collided)
+	barrier.barrier_broken.connect(_on_barrier_broken)
+	barrier.item_collided.connect(_on_item_collided)
 	barrier.position = Vector2(viewport_size.x, 0)
 	barriers.add_child(barrier)
 
@@ -225,6 +240,15 @@ func _on_h_slider_drag_ended(value_changed: bool) -> void:
 
 func _on_role_pressed() -> void:
 	role_select.visible = true
+	var last_role = GameData.get_data("last_player_role")
+	# TODO role_item.show_border()
+	match last_role:
+		"chick":
+			selected_border.global_position = Vector2(345.0, 221.0)
+		"dog":
+			selected_border.global_position = Vector2(445.0, 221.0)
+		"pig":
+			selected_border.global_position = Vector2(545.0, 221.0)
 
 
 func _on_role_select_back_gui_input(event: InputEvent) -> void:

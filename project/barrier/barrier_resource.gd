@@ -6,3 +6,4 @@ extends Resource
 @export var head_texture: Texture2D
 @export var rate: float
 @export var item_rate: float
+@export var broken_score: int

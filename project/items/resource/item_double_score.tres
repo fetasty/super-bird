@@ -9,5 +9,5 @@ key = "double_score"
 texture = ExtResource("2_ky46v")
 scale = 0.5
 rate = 0.5
-buff = 0
+buff = "double_score"
 metadata/_custom_type_script = "uid://br4opegdflk6h"

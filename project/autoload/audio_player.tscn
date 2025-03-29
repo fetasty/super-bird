@@ -1,10 +1,12 @@
-[gd_scene load_steps=6 format=3 uid="uid://dx11sabgajww8"]
+[gd_scene load_steps=8 format=3 uid="uid://dx11sabgajww8"]
 
 [ext_resource type="AudioStream" uid="uid://df1vx11au6byj" path="res://audios/back1.wav" id="1_81fu2"]
 [ext_resource type="Script" uid="uid://c2ma4ol8ah8um" path="res://autoload/audio_player.gd" id="1_f1804"]
 [ext_resource type="AudioStream" uid="uid://dn0113llrd5kb" path="res://audios/back.wav" id="3_nlbx0"]
 [ext_resource type="AudioStream" uid="uid://cc3kpcoba56k2" path="res://audios/jump1.wav" id="4_j4ca1"]
 [ext_resource type="AudioStream" uid="uid://1heeju235jus" path="res://audios/hit.wav" id="5_jqcyi"]
+[ext_resource type="AudioStream" uid="uid://dcijqg67ddq8c" path="res://audios/item.wav" id="6_m1qq1"]
+[ext_resource type="AudioStream" uid="uid://d2iudkdtg4j4h" path="res://audios/wood_crack.mp3" id="7_2ujlh"]
 
 [node name="AudioPlayer" type="Node2D"]
 script = ExtResource("1_f1804")
@@ -20,6 +22,12 @@ stream = ExtResource("4_j4ca1")
 
 [node name="HitAudio" type="AudioStreamPlayer" parent="."]
 stream = ExtResource("5_jqcyi")
+
+[node name="ItemAudio" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("6_m1qq1")
+
+[node name="CrackAudio" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("7_2ujlh")
 
 [connection signal="finished" from="WelcomAudio" to="." method="_on_welcom_audio_finished"]
 [connection signal="finished" from="BackgroundAudio" to="." method="_on_background_audio_finished"]

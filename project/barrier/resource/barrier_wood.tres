@@ -11,4 +11,5 @@ body_texture = ExtResource("1_1rfsm")
 head_texture = ExtResource("2_f23yo")
 rate = 0.3
 item_rate = 0.1
+broken_score = 5
 metadata/_custom_type_script = "uid://dledm0cusdqc1"

@@ -7,6 +7,9 @@ const BODY_SIZE: Vector2 = Vector2(17, 5)
 const HEAD_SIZE: Vector2 = Vector2(28, 9)
 
 signal arrived_score_pos
+signal player_collided_with_barrier
+signal barrier_broken(score: int)
+signal item_collided(buff: String)
 
 ## init before add to scene tree
 var resource: BarrierResource = null
@@ -144,6 +147,7 @@ func _rebuild_barrier() -> void:
 	if randf() < resource.item_rate:
 		var item = ITEM_SCENE.instantiate()
 		item.res = GameData.random_item_res()
+		item.collided.connect(_on_item_collided)
 		Logger.info("Item generated! type: %s" % item.res.key)
 		item.position.y = screen_size.y * randf_range(0.2, 0.8)
 		add_child(item)
@@ -157,35 +161,48 @@ func _on_config_changed(key: String, value: Variant) -> void:
 			pass
 
 
-func _on_upper_part_collided(_area: Area2D) -> void:
-	Logger.info("Upper part collided!")
-	# TODO 从GameData中获取player的buff状态
-	match resource.key:
-		"barrier_iron":
-			pass
-		"barrier_wood":
-			pass
-		"barrier_grass":
-			var partical = BREAK_PARTICAL.instantiate()
-			add_child(partical)
-			partical.global_position = _area.global_position
-			partical.restart()
-			for child in upper_parts.get_children():
-				child.queue_free()
+func _on_item_collided(buff: String) -> void:
+	item_collided.emit(buff)
 
 
-func _on_lower_part_collided(_area: Area2D) -> void:
-	Logger.info("Lower part collided!")
-	# TODO 从GameData中获取player的buff状态
-	match resource.key:
-		"barrier_iron":
-			pass
-		"barrier_wood":
-			pass
-		"barrier_grass":
+func _on_part_collided(area: Area2D, upper: bool) -> void:
+	if area.has_meta("player"):
+		Logger.info("%s part collided!" % "Upper" if upper else "Lower")
+		var player = area.get_meta("player")
+		var broken = false
+		# TODO 从GameData中获取player的buff状态
+		match resource.key:
+			"barrier_iron":
+				if player.buff_status["shield"]:
+					broken = true
+			"barrier_wood":
+				if player.buff_status["shield"] or player.buff_status["saw"]:
+					broken = true
+			"barrier_grass":
+				broken = true
+		if broken:
 			var partical = BREAK_PARTICAL.instantiate()
+			barrier_broken.emit(resource.broken_score)
+			match resource.key:
+				"barrier_iron":
+					partical.process_material.color = Color8(54, 147, 198)
+				"barrier_wood":
+					partical.process_material.color = Color8(157, 98, 49)
+				"barrier_grass":
+					partical.process_material.color = Color8(111, 120, 58)
 			add_child(partical)
-			partical.global_position = _area.global_position
+			partical.global_position = area.global_position
 			partical.restart()
-			for child in lower_parts.get_children():
+			var parts = upper_parts if upper else lower_parts
+			for child in parts.get_children():
 				child.queue_free()
+		else:
+			player_collided_with_barrier.emit()
+
+
+func _on_upper_part_collided(area: Area2D) -> void:
+	_on_part_collided(area, true)
+
+
+func _on_lower_part_collided(area: Area2D) -> void:
+	_on_part_collided(area, false)

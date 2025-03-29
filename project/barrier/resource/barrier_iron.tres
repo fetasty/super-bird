@@ -10,4 +10,6 @@ key = "barrier_iron"
 body_texture = ExtResource("1_w1bwy")
 head_texture = ExtResource("2_f78be")
 rate = 0.5
+item_rate = 0.0
+broken_score = 4
 metadata/_custom_type_script = "uid://dledm0cusdqc1"

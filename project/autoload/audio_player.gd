@@ -15,6 +15,8 @@ var _is_play_effect: bool = true
 @onready var background_audio: AudioStreamPlayer = $BackgroundAudio
 @onready var jump_audio: AudioStreamPlayer = $JumpAudio
 @onready var hit_audio: AudioStreamPlayer = $HitAudio
+@onready var item_audio: AudioStreamPlayer = $ItemAudio
+@onready var crack_audio: AudioStreamPlayer = $CrackAudio
 
 
 func _ready() -> void:
@@ -38,11 +40,15 @@ func set_mute(mute: bool) -> void:
 		background_audio.volume_linear = 0.0
 		jump_audio.volume_linear = 0.0
 		hit_audio.volume_linear = 0.0
+		item_audio.volume_linear = 0.0
+		crack_audio.volume_linear = 0.0
 	else:
 		welcom_audio.volume_linear = audio_volume
 		background_audio.volume_linear = audio_volume
 		jump_audio.volume_linear = audio_volume
 		hit_audio.volume_linear = audio_volume
+		item_audio.volume_linear = audio_volume
+		crack_audio.volume_linear = audio_volume
 
 
 func set_volume(value: float) -> void:
@@ -96,6 +102,18 @@ func play_hit() -> void:
 	if hit_audio.playing:
 		return
 	hit_audio.play()
+
+
+func play_item() -> void:
+	if is_mute or not _is_play_effect:
+		return
+	item_audio.play()
+
+
+func play_crack() -> void:
+	if is_mute or not _is_play_effect:
+		return
+	crack_audio.play()
 
 
 func _on_data_changed(key: String, value: Variant) -> void:

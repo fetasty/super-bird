@@ -9,5 +9,5 @@ key = "saw"
 texture = ExtResource("2_o5275")
 scale = 0.5
 rate = 0.3
-buff = 1
+buff = "saw"
 metadata/_custom_type_script = "uid://br4opegdflk6h"
