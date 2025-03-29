@@ -1,9 +1,10 @@
 extends Node2D
 
 const BARRIER_HITBOX: PackedScene = preload("res://barrier/barrier_hitbox.tscn")
+const BREAK_PARTICAL: PackedScene  = preload("res://barrier/break_partical.tscn")
+const ITEM_SCENE: PackedScene = preload("res://items/item.tscn")
 const BODY_SIZE: Vector2 = Vector2(17, 5)
 const HEAD_SIZE: Vector2 = Vector2(28, 9)
-const BREAK_PARTICAL = preload("res://barrier/break_partical.tscn")
 
 signal arrived_score_pos
 
@@ -139,6 +140,13 @@ func _rebuild_barrier() -> void:
 		lower_head_box.set_meta("type", resource.key)
 		lower_head_box.area_entered.connect(_on_lower_part_collided)
 		lower_parts.add_child(lower_head_box)
+	# item generate
+	if randf() < resource.item_rate:
+		var item = ITEM_SCENE.instantiate()
+		item.res = GameData.random_item_res()
+		Logger.info("Item generated! type: %s" % item.res.key)
+		item.position.y = screen_size.y * randf_range(0.2, 0.8)
+		add_child(item)
 
 
 func _on_config_changed(key: String, value: Variant) -> void:

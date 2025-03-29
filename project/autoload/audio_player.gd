@@ -1,5 +1,9 @@
 extends Node2D
 
+const DOG = preload("res://audios/dog.mp3")
+const PIG = preload("res://audios/pig.mp3")
+const CHICK = preload("res://audios/chick.mp3")
+
 var is_mute: bool = false
 var audio_volume: float = 1.0
 
@@ -17,8 +21,10 @@ func _ready() -> void:
 	# load saved data
 	var mute = GameData.get_data("audio_mute", false)
 	var volume = GameData.get_data("audio_volume", 0.5)
+	var role = GameData.get_data("last_player_role", "chick")
 	set_volume(volume)
 	set_mute(mute)
+	set_player_role(role)
 	# listen data changes
 	GameData.data_changed.connect(_on_data_changed)
 
@@ -47,6 +53,19 @@ func set_volume(value: float) -> void:
 	background_audio.volume_linear = audio_volume
 	jump_audio.volume_linear = audio_volume
 	hit_audio.volume_linear = audio_volume
+
+
+func set_player_role(value: String) -> void:
+	match value:
+		"chick":
+			jump_audio.stream = CHICK
+		"dog":
+			jump_audio.stream = DOG
+		"pig":
+			jump_audio.stream = PIG
+		_:
+			assert(false)
+			pass
 
 
 func set_welcome_play(enable: bool) -> void:
@@ -85,6 +104,8 @@ func _on_data_changed(key: String, value: Variant) -> void:
 			set_mute(value)
 		"audio_volume":
 			set_volume(value)
+		"last_player_role":
+			set_player_role(value)
 		_:
 			pass
 

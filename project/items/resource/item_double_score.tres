@@ -1,0 +1,13 @@
+[gd_resource type="Resource" script_class="ItemResource" load_steps=3 format=3 uid="uid://r5gs506bxn0f"]
+
+[ext_resource type="Script" uid="uid://br4opegdflk6h" path="res://items/item_resource.gd" id="1_aam07"]
+[ext_resource type="Texture2D" uid="uid://cohp837mq7kjy" path="res://arts/double_score.tres" id="2_ky46v"]
+
+[resource]
+script = ExtResource("1_aam07")
+key = "double_score"
+texture = ExtResource("2_ky46v")
+scale = 0.5
+rate = 0.5
+buff = 0
+metadata/_custom_type_script = "uid://br4opegdflk6h"

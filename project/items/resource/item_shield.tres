@@ -1,0 +1,13 @@
+[gd_resource type="Resource" script_class="ItemResource" load_steps=3 format=3 uid="uid://bnqjak45j58lx"]
+
+[ext_resource type="Script" uid="uid://br4opegdflk6h" path="res://items/item_resource.gd" id="1_hyli2"]
+[ext_resource type="Texture2D" uid="uid://cct003f8vsk1i" path="res://arts/shield.tres" id="2_5m1xu"]
+
+[resource]
+script = ExtResource("1_hyli2")
+key = "shield"
+texture = ExtResource("2_5m1xu")
+scale = 0.5
+rate = 0.2
+buff = 2
+metadata/_custom_type_script = "uid://br4opegdflk6h"

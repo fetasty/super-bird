@@ -21,6 +21,7 @@ const _DEFAULT_CONFIG: Dictionary = {
 	"level_gravity": [850.0, 900.0, 950.0],
 	"level_barrier_spawn_time": [0.9, 0.8, 0.7],
 	"level_barrier_speed": [130.0, 150.0, 170.0],
+	"buff_time": {"double_score": 20.0, "saw": 15.0, "shield": 10.0},
 }
 const _DEFAULT_DATA: Dictionary = {
 	"audio_mute": false,
@@ -33,6 +34,7 @@ const _GAME_SECTION = "game"
 var _game_config: Dictionary
 var _barrier_res: Dictionary
 var _player_res: Dictionary
+var _item_res: Dictionary
 var _save_file = ConfigFile.new()
 var _save_data_updated: bool = false
 
@@ -42,6 +44,7 @@ func _ready() -> void:
 	_load_data()
 	_init_barrier_res()
 	_init_player_res()
+	_init_item_res()
 
 
 func _exit_tree() -> void:
@@ -100,6 +103,21 @@ func random_barrier_res() -> BarrierResource:
 	return null
 
 
+func random_item_res() -> ItemResource:
+	var max_rate = 0.0
+	for key in _item_res:
+		var rate = _item_res[key].rate
+		max_rate += rate
+	var rand = randf_range(0.0, max_rate)
+	for key in _item_res:
+		var rate = _item_res[key].rate
+		rand -= rate
+		if rand <= 0.0:
+			return _item_res[key]
+	assert(false, "Invalid item res.")
+	return null
+
+
 func player_res_dict() -> Dictionary:
 	return _player_res
 
@@ -136,6 +154,15 @@ func _init_player_res() -> void:
 		var path = base_dir + "/" + res_path
 		var res := ResourceLoader.load(path) as PlayerResource
 		_player_res[res.key] = res
+
+
+func _init_item_res() -> void:
+	var base_dir = "res://items/resource"
+	var item_res_arr = ResourceLoader.list_directory(base_dir)
+	for res_path in item_res_arr:
+		var path = base_dir + "/" + res_path
+		var res := ResourceLoader.load(path) as ItemResource
+		_item_res[res.key] = res
 
 
 func _create_autosave_timer() -> void:

@@ -1,0 +1,13 @@
+[gd_resource type="Resource" script_class="ItemResource" load_steps=3 format=3 uid="uid://bsrsitvjvj6wa"]
+
+[ext_resource type="Script" uid="uid://br4opegdflk6h" path="res://items/item_resource.gd" id="1_kav6n"]
+[ext_resource type="Texture2D" uid="uid://bnktyvjryop38" path="res://arts/saw.tres" id="2_o5275"]
+
+[resource]
+script = ExtResource("1_kav6n")
+key = "saw"
+texture = ExtResource("2_o5275")
+scale = 0.5
+rate = 0.3
+buff = 1
+metadata/_custom_type_script = "uid://br4opegdflk6h"
