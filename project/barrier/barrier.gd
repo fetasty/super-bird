@@ -167,10 +167,9 @@ func _on_item_collided(buff: String) -> void:
 
 func _on_part_collided(area: Area2D, upper: bool) -> void:
 	if area.has_meta("player"):
-		Logger.info("%s part collided!" % "Upper" if upper else "Lower")
+		Logger.info("%s part collided!" % ("Upper" if upper else "Lower"))
 		var player = area.get_meta("player")
 		var broken = false
-		# TODO 从GameData中获取player的buff状态
 		match resource.key:
 			"barrier_iron":
 				if player.buff_status["shield"]:
@@ -185,11 +184,11 @@ func _on_part_collided(area: Area2D, upper: bool) -> void:
 			barrier_broken.emit(resource.broken_score)
 			match resource.key:
 				"barrier_iron":
-					partical.process_material.color = Color8(54, 147, 198)
+					partical.process_material.color = Color8(149, 160, 195)
 				"barrier_wood":
-					partical.process_material.color = Color8(157, 98, 49)
+					partical.process_material.color = Color8(179, 125, 89)
 				"barrier_grass":
-					partical.process_material.color = Color8(111, 120, 58)
+					partical.process_material.color = Color8(86, 121, 85)
 			add_child(partical)
 			partical.global_position = area.global_position
 			partical.restart()

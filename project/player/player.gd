@@ -14,6 +14,12 @@ var _buff_time = {
 	"double_score": 0.0,
 	"shield": 0.0,
 }
+var _buff_tween = {
+	"saw": null,
+	"double_score": null,
+	"shield": null,
+}
+var _buff_obj = {}
 ## 重力加速度
 var _gravity = 800.0
 ## 跳跃速度
@@ -43,6 +49,9 @@ func _ready() -> void:
 	GameData.config_changed.connect(_on_config_changed)
 	GameData.data_changed.connect(_on_data_changed)
 	area_2d.set_meta("player", self)
+	_buff_obj["double_score"] = double_buff
+	_buff_obj["saw"] = saw_buff
+	_buff_obj["shield"] = shield_buff
 
 
 func _process(delta: float) -> void:
@@ -131,11 +140,22 @@ func _remove_buff(buff: String) -> void:
 func _update_buff(delta: float) -> void:
 	for buff in _buff_time:
 		if _buff_time[buff] > 0.0:
-			if _buff_time[buff] >= 2.0 and _buff_time[buff] - delta < 2.0:
-				# TODO 闪烁动画
-				pass
+			if _buff_time[buff] >= 3.0 and _buff_time[buff] - delta < 3.0:
+				if _buff_tween[buff]:
+					Logger.info("Buff %s resume!" % buff)
+					_buff_tween[buff].play()
+				else:
+					var tween = get_tree().create_tween().set_loops()
+					tween.tween_property(_buff_obj[buff], "self_modulate:a", 0.1, 0.1)
+					tween.tween_property(_buff_obj[buff], "self_modulate:a", 1.0, 0.3)
+					tween.tween_callback(func ():
+						if _buff_time[buff] > 3.0 or not buff_status[buff] or _buff_time[buff] <= 0.0:
+							tween.stop()
+							Logger.info("Buff %s stop!" % buff)
+					)
+					Logger.info("Buff %s create!" % buff)
+					_buff_tween[buff] = tween
 			_buff_time[buff] -= delta
-			# TODO 更新时间显示
 			if _buff_time[buff] <= 0.0:
 				_remove_buff(buff)
 

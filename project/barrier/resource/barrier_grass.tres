@@ -10,6 +10,6 @@ key = "barrier_grass"
 body_texture = ExtResource("1_ehdaa")
 head_texture = ExtResource("2_26gl0")
 rate = 0.2
-item_rate = 0.2
+item_rate = 0.3
 broken_score = 2
 metadata/_custom_type_script = "uid://dledm0cusdqc1"

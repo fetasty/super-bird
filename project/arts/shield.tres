@@ -4,4 +4,4 @@
 
 [resource]
 atlas = ExtResource("1_iwiml")
-region = Rect2(85, 70, 53, 53)
+region = Rect2(83, 68, 57, 57)

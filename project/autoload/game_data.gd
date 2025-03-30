@@ -21,7 +21,7 @@ const _DEFAULT_CONFIG: Dictionary = {
 	"level_gravity": [850.0, 900.0, 950.0],
 	"level_barrier_spawn_time": [0.9, 0.8, 0.7],
 	"level_barrier_speed": [130.0, 150.0, 170.0],
-	"buff_time": {"double_score": 20.0, "saw": 15.0, "shield": 10.0},
+	"buff_time": {"double_score": 20.0, "saw": 15.0, "shield": 15.0},
 }
 const _DEFAULT_DATA: Dictionary = {
 	"audio_mute": false,

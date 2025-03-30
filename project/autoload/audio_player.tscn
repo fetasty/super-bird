@@ -5,8 +5,8 @@
 [ext_resource type="AudioStream" uid="uid://dn0113llrd5kb" path="res://audios/back.wav" id="3_nlbx0"]
 [ext_resource type="AudioStream" uid="uid://cc3kpcoba56k2" path="res://audios/jump1.wav" id="4_j4ca1"]
 [ext_resource type="AudioStream" uid="uid://1heeju235jus" path="res://audios/hit.wav" id="5_jqcyi"]
-[ext_resource type="AudioStream" uid="uid://dcijqg67ddq8c" path="res://audios/item.wav" id="6_m1qq1"]
-[ext_resource type="AudioStream" uid="uid://d2iudkdtg4j4h" path="res://audios/wood_crack.mp3" id="7_2ujlh"]
+[ext_resource type="AudioStream" uid="uid://b16bdus8xssy6" path="res://audios/item.mp3" id="6_2ujlh"]
+[ext_resource type="AudioStream" uid="uid://cayv5o7tucl58" path="res://audios/crack.mp3" id="7_2ujlh"]
 
 [node name="AudioPlayer" type="Node2D"]
 script = ExtResource("1_f1804")
@@ -24,7 +24,7 @@ stream = ExtResource("4_j4ca1")
 stream = ExtResource("5_jqcyi")
 
 [node name="ItemAudio" type="AudioStreamPlayer" parent="."]
-stream = ExtResource("6_m1qq1")
+stream = ExtResource("6_2ujlh")
 
 [node name="CrackAudio" type="AudioStreamPlayer" parent="."]
 stream = ExtResource("7_2ujlh")
