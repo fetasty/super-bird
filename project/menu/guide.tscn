@@ -1,0 +1,267 @@
+[gd_scene load_steps=8 format=3 uid="uid://dsldwxppld7qs"]
+
+[ext_resource type="Texture2D" uid="uid://crr8nlrtoi2xs" path="res://arts/border1.tres" id="1_dcgv6"]
+[ext_resource type="Script" uid="uid://dphywihhqv6fs" path="res://menu/guide.gd" id="1_qvaqe"]
+[ext_resource type="Texture2D" uid="uid://bvy1egy1g7gnw" path="res://arts/chick.tres" id="2_qvaqe"]
+[ext_resource type="Texture2D" uid="uid://xlddqpp5tkok" path="res://arts/iron_barrier_body.tres" id="4_mmhaj"]
+[ext_resource type="Texture2D" uid="uid://cmjlxpy5k5bk7" path="res://arts/iron_barrier_head.tres" id="5_5ny6u"]
+[ext_resource type="Texture2D" uid="uid://cyr7pykdpo5ix" path="res://arts/wood_barrier_body.tres" id="6_6iynk"]
+[ext_resource type="Texture2D" uid="uid://dlgfuuq6eyafl" path="res://arts/wood_barrier_head.tres" id="7_tf5a6"]
+
+[node name="Guide" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_qvaqe")
+
+[node name="Guide1" type="NinePatchRect" parent="."]
+layout_mode = 0
+offset_left = 20.0
+offset_top = 85.0
+offset_right = 260.0
+offset_bottom = 283.0
+texture = ExtResource("1_dcgv6")
+patch_margin_left = 7
+patch_margin_top = 7
+patch_margin_right = 7
+patch_margin_bottom = 7
+
+[node name="GuidePlayer" type="TextureRect" parent="Guide1"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -20.0
+offset_right = 20.0
+offset_bottom = 40.0
+grow_horizontal = 2
+grow_vertical = 2
+scale = Vector2(1.2, 1.2)
+texture = ExtResource("2_qvaqe")
+
+[node name="Label" type="Label" parent="Guide1"]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -91.5
+offset_top = 5.0
+offset_right = 91.5
+offset_bottom = 47.0
+grow_horizontal = 2
+theme_override_font_sizes/font_size = 30
+text = "1. 按空格跳跃"
+horizontal_alignment = 1
+
+[node name="NinePatchRect" type="NinePatchRect" parent="Guide1"]
+self_modulate = Color(0.35, 0.956667, 1, 1)
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -50.5
+offset_top = -39.0
+offset_right = 50.5
+offset_bottom = -10.0
+grow_horizontal = 2
+grow_vertical = 0
+texture = ExtResource("1_dcgv6")
+patch_margin_left = 7
+patch_margin_top = 7
+patch_margin_right = 7
+patch_margin_bottom = 7
+
+[node name="Label" type="Label" parent="Guide1/NinePatchRect"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -23.0
+offset_top = -11.5
+offset_right = 23.0
+offset_bottom = 11.5
+grow_horizontal = 2
+grow_vertical = 2
+text = "Space"
+
+[node name="Guide2" type="NinePatchRect" parent="."]
+layout_mode = 0
+offset_left = 320.0
+offset_top = 85.0
+offset_right = 560.0
+offset_bottom = 283.0
+texture = ExtResource("1_dcgv6")
+patch_margin_left = 7
+patch_margin_top = 7
+patch_margin_right = 7
+patch_margin_bottom = 7
+
+[node name="Label" type="Label" parent="Guide2"]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -91.5
+offset_top = 5.0
+offset_right = 91.5
+offset_bottom = 47.0
+grow_horizontal = 2
+theme_override_font_sizes/font_size = 30
+text = "2. 避开障碍"
+horizontal_alignment = 1
+
+[node name="GuidePlayer" type="TextureRect" parent="Guide2"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -100.0
+offset_top = -7.00002
+offset_right = -60.0
+offset_bottom = 33.0
+grow_horizontal = 2
+grow_vertical = 2
+scale = Vector2(1.2, 1.2)
+texture = ExtResource("2_qvaqe")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="Guide2"]
+layout_mode = 0
+offset_left = 60.0
+offset_top = 48.0
+offset_right = 88.0
+offset_bottom = 67.0
+scale = Vector2(2, 2)
+theme_override_constants/separation = 0
+alignment = 1
+
+[node name="TextureRect2" type="TextureRect" parent="Guide2/VBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 4
+texture = ExtResource("4_mmhaj")
+stretch_mode = 2
+
+[node name="TextureRect3" type="TextureRect" parent="Guide2/VBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 4
+texture = ExtResource("5_5ny6u")
+stretch_mode = 2
+
+[node name="VBoxContainer2" type="VBoxContainer" parent="Guide2"]
+layout_mode = 0
+offset_left = 60.0
+offset_top = 148.0
+offset_right = 88.0
+offset_bottom = 172.0
+scale = Vector2(2, 2)
+theme_override_constants/separation = 0
+alignment = 1
+
+[node name="TextureRect3" type="TextureRect" parent="Guide2/VBoxContainer2"]
+layout_mode = 2
+size_flags_horizontal = 4
+texture = ExtResource("5_5ny6u")
+stretch_mode = 2
+
+[node name="TextureRect2" type="TextureRect" parent="Guide2/VBoxContainer2"]
+layout_mode = 2
+size_flags_horizontal = 4
+texture = ExtResource("4_mmhaj")
+stretch_mode = 2
+
+[node name="TextureRect4" type="TextureRect" parent="Guide2/VBoxContainer2"]
+layout_mode = 2
+size_flags_horizontal = 4
+texture = ExtResource("4_mmhaj")
+stretch_mode = 2
+
+[node name="TextureRect5" type="TextureRect" parent="Guide2/VBoxContainer2"]
+layout_mode = 2
+size_flags_horizontal = 4
+texture = ExtResource("4_mmhaj")
+stretch_mode = 2
+
+[node name="VBoxContainer3" type="VBoxContainer" parent="Guide2"]
+layout_mode = 0
+offset_left = 150.0
+offset_top = 48.0
+offset_right = 178.0
+offset_bottom = 77.0
+scale = Vector2(2, 2)
+theme_override_constants/separation = 0
+alignment = 1
+
+[node name="TextureRect2" type="TextureRect" parent="Guide2/VBoxContainer3"]
+layout_mode = 2
+size_flags_horizontal = 4
+texture = ExtResource("6_6iynk")
+stretch_mode = 2
+
+[node name="TextureRect4" type="TextureRect" parent="Guide2/VBoxContainer3"]
+layout_mode = 2
+size_flags_horizontal = 4
+texture = ExtResource("6_6iynk")
+stretch_mode = 2
+
+[node name="TextureRect5" type="TextureRect" parent="Guide2/VBoxContainer3"]
+layout_mode = 2
+size_flags_horizontal = 4
+texture = ExtResource("6_6iynk")
+stretch_mode = 2
+
+[node name="TextureRect6" type="TextureRect" parent="Guide2/VBoxContainer3"]
+layout_mode = 2
+size_flags_horizontal = 4
+texture = ExtResource("6_6iynk")
+stretch_mode = 2
+
+[node name="TextureRect3" type="TextureRect" parent="Guide2/VBoxContainer3"]
+layout_mode = 2
+size_flags_horizontal = 4
+texture = ExtResource("7_tf5a6")
+stretch_mode = 2
+
+[node name="VBoxContainer4" type="VBoxContainer" parent="Guide2"]
+layout_mode = 0
+offset_left = 150.0
+offset_top = 168.0
+offset_right = 178.0
+offset_bottom = 182.0
+scale = Vector2(2, 2)
+theme_override_constants/separation = 0
+alignment = 1
+
+[node name="TextureRect3" type="TextureRect" parent="Guide2/VBoxContainer4"]
+layout_mode = 2
+size_flags_horizontal = 4
+texture = ExtResource("7_tf5a6")
+stretch_mode = 2
+
+[node name="TextureRect2" type="TextureRect" parent="Guide2/VBoxContainer4"]
+layout_mode = 2
+size_flags_horizontal = 4
+texture = ExtResource("6_6iynk")
+stretch_mode = 2
+
+[node name="Label" type="Label" parent="."]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -57.0
+offset_top = 20.0
+offset_right = 57.0
+offset_bottom = 75.0
+grow_horizontal = 2
+theme_override_font_sizes/font_size = 40
+text = "Guide"
