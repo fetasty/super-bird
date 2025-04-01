@@ -1,4 +1,4 @@
-[gd_scene load_steps=8 format=3 uid="uid://dsldwxppld7qs"]
+[gd_scene load_steps=13 format=3 uid="uid://dsldwxppld7qs"]
 
 [ext_resource type="Texture2D" uid="uid://crr8nlrtoi2xs" path="res://arts/border1.tres" id="1_dcgv6"]
 [ext_resource type="Script" uid="uid://dphywihhqv6fs" path="res://menu/guide.gd" id="1_qvaqe"]
@@ -7,6 +7,11 @@
 [ext_resource type="Texture2D" uid="uid://cmjlxpy5k5bk7" path="res://arts/iron_barrier_head.tres" id="5_5ny6u"]
 [ext_resource type="Texture2D" uid="uid://cyr7pykdpo5ix" path="res://arts/wood_barrier_body.tres" id="6_6iynk"]
 [ext_resource type="Texture2D" uid="uid://dlgfuuq6eyafl" path="res://arts/wood_barrier_head.tres" id="7_tf5a6"]
+[ext_resource type="Texture2D" uid="uid://cct003f8vsk1i" path="res://arts/shield.tres" id="8_jubf5"]
+[ext_resource type="Texture2D" uid="uid://dlm2ffqoiy4ty" path="res://arts/grass_barrier_body.tres" id="8_ynfkj"]
+[ext_resource type="Texture2D" uid="uid://bnktyvjryop38" path="res://arts/saw.tres" id="9_vuuo4"]
+[ext_resource type="Texture2D" uid="uid://bm3dhiue085v1" path="res://arts/grass_barrier_head.tres" id="9_xd56k"]
+[ext_resource type="Texture2D" uid="uid://cohp837mq7kjy" path="res://arts/double_score.tres" id="12_xd56k"]
 
 [node name="Guide" type="Control"]
 layout_mode = 3
@@ -17,12 +22,21 @@ grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_qvaqe")
 
+[node name="ColorRect" type="ColorRect" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0.182566, 0.182566, 0.182566, 1)
+
 [node name="Guide1" type="NinePatchRect" parent="."]
 layout_mode = 0
-offset_left = 20.0
-offset_top = 85.0
-offset_right = 260.0
-offset_bottom = 283.0
+offset_left = 63.0
+offset_top = 81.0
+offset_right = 303.0
+offset_bottom = 279.0
 texture = ExtResource("1_dcgv6")
 patch_margin_left = 7
 patch_margin_top = 7
@@ -95,10 +109,10 @@ text = "Space"
 
 [node name="Guide2" type="NinePatchRect" parent="."]
 layout_mode = 0
-offset_left = 320.0
-offset_top = 85.0
-offset_right = 560.0
-offset_bottom = 283.0
+offset_left = 133.0
+offset_top = 315.0
+offset_right = 373.0
+offset_bottom = 513.0
 texture = ExtResource("1_dcgv6")
 patch_margin_left = 7
 patch_margin_top = 7
@@ -126,9 +140,9 @@ anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-offset_left = -100.0
+offset_left = -24.0
 offset_top = -7.00002
-offset_right = -60.0
+offset_right = 16.0
 offset_bottom = 33.0
 grow_horizontal = 2
 grow_vertical = 2
@@ -137,9 +151,9 @@ texture = ExtResource("2_qvaqe")
 
 [node name="VBoxContainer" type="VBoxContainer" parent="Guide2"]
 layout_mode = 0
-offset_left = 60.0
+offset_left = 94.0
 offset_top = 48.0
-offset_right = 88.0
+offset_right = 122.0
 offset_bottom = 67.0
 scale = Vector2(2, 2)
 theme_override_constants/separation = 0
@@ -159,9 +173,9 @@ stretch_mode = 2
 
 [node name="VBoxContainer2" type="VBoxContainer" parent="Guide2"]
 layout_mode = 0
-offset_left = 60.0
+offset_left = 94.0
 offset_top = 148.0
-offset_right = 88.0
+offset_right = 122.0
 offset_bottom = 172.0
 scale = Vector2(2, 2)
 theme_override_constants/separation = 0
@@ -191,67 +205,338 @@ size_flags_horizontal = 4
 texture = ExtResource("4_mmhaj")
 stretch_mode = 2
 
-[node name="VBoxContainer3" type="VBoxContainer" parent="Guide2"]
+[node name="Guide3" type="NinePatchRect" parent="."]
 layout_mode = 0
-offset_left = 150.0
-offset_top = 48.0
-offset_right = 178.0
-offset_bottom = 77.0
+offset_left = 401.0
+offset_top = 103.0
+offset_right = 885.0
+offset_bottom = 397.0
+texture = ExtResource("1_dcgv6")
+patch_margin_left = 7
+patch_margin_top = 7
+patch_margin_right = 7
+patch_margin_bottom = 7
+
+[node name="Label" type="Label" parent="Guide3"]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -91.5
+offset_top = 5.0
+offset_right = 91.5
+offset_bottom = 47.0
+grow_horizontal = 2
+theme_override_font_sizes/font_size = 30
+text = "3. 拾取道具击碎障碍"
+horizontal_alignment = 1
+
+[node name="VBoxContainer" type="VBoxContainer" parent="Guide3"]
+layout_mode = 0
+offset_left = 75.0
+offset_top = 60.0
+offset_right = 103.0
+offset_bottom = 79.0
 scale = Vector2(2, 2)
 theme_override_constants/separation = 0
 alignment = 1
 
-[node name="TextureRect2" type="TextureRect" parent="Guide2/VBoxContainer3"]
+[node name="TextureRect2" type="TextureRect" parent="Guide3/VBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 4
+texture = ExtResource("4_mmhaj")
+stretch_mode = 2
+
+[node name="TextureRect3" type="TextureRect" parent="Guide3/VBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 4
+texture = ExtResource("5_5ny6u")
+stretch_mode = 2
+
+[node name="VBoxContainer2" type="VBoxContainer" parent="Guide3"]
+layout_mode = 0
+offset_left = 75.0
+offset_top = 160.0
+offset_right = 103.0
+offset_bottom = 184.0
+scale = Vector2(2, 2)
+theme_override_constants/separation = 0
+alignment = 1
+
+[node name="TextureRect3" type="TextureRect" parent="Guide3/VBoxContainer2"]
+layout_mode = 2
+size_flags_horizontal = 4
+texture = ExtResource("5_5ny6u")
+stretch_mode = 2
+
+[node name="TextureRect2" type="TextureRect" parent="Guide3/VBoxContainer2"]
+layout_mode = 2
+size_flags_horizontal = 4
+texture = ExtResource("4_mmhaj")
+stretch_mode = 2
+
+[node name="TextureRect4" type="TextureRect" parent="Guide3/VBoxContainer2"]
+layout_mode = 2
+size_flags_horizontal = 4
+texture = ExtResource("4_mmhaj")
+stretch_mode = 2
+
+[node name="TextureRect5" type="TextureRect" parent="Guide3/VBoxContainer2"]
+layout_mode = 2
+size_flags_horizontal = 4
+texture = ExtResource("4_mmhaj")
+stretch_mode = 2
+
+[node name="VBoxContainer3" type="VBoxContainer" parent="Guide3"]
+layout_mode = 0
+offset_left = 215.0
+offset_top = 60.0
+offset_right = 243.0
+offset_bottom = 79.0
+scale = Vector2(2, 2)
+theme_override_constants/separation = 0
+alignment = 1
+
+[node name="TextureRect2" type="TextureRect" parent="Guide3/VBoxContainer3"]
 layout_mode = 2
 size_flags_horizontal = 4
 texture = ExtResource("6_6iynk")
 stretch_mode = 2
 
-[node name="TextureRect4" type="TextureRect" parent="Guide2/VBoxContainer3"]
-layout_mode = 2
-size_flags_horizontal = 4
-texture = ExtResource("6_6iynk")
-stretch_mode = 2
-
-[node name="TextureRect5" type="TextureRect" parent="Guide2/VBoxContainer3"]
-layout_mode = 2
-size_flags_horizontal = 4
-texture = ExtResource("6_6iynk")
-stretch_mode = 2
-
-[node name="TextureRect6" type="TextureRect" parent="Guide2/VBoxContainer3"]
-layout_mode = 2
-size_flags_horizontal = 4
-texture = ExtResource("6_6iynk")
-stretch_mode = 2
-
-[node name="TextureRect3" type="TextureRect" parent="Guide2/VBoxContainer3"]
+[node name="TextureRect3" type="TextureRect" parent="Guide3/VBoxContainer3"]
 layout_mode = 2
 size_flags_horizontal = 4
 texture = ExtResource("7_tf5a6")
 stretch_mode = 2
 
-[node name="VBoxContainer4" type="VBoxContainer" parent="Guide2"]
+[node name="VBoxContainer4" type="VBoxContainer" parent="Guide3"]
 layout_mode = 0
-offset_left = 150.0
-offset_top = 168.0
-offset_right = 178.0
-offset_bottom = 182.0
+offset_left = 215.0
+offset_top = 160.0
+offset_right = 243.0
+offset_bottom = 184.0
 scale = Vector2(2, 2)
 theme_override_constants/separation = 0
 alignment = 1
 
-[node name="TextureRect3" type="TextureRect" parent="Guide2/VBoxContainer4"]
+[node name="TextureRect3" type="TextureRect" parent="Guide3/VBoxContainer4"]
 layout_mode = 2
 size_flags_horizontal = 4
 texture = ExtResource("7_tf5a6")
 stretch_mode = 2
 
-[node name="TextureRect2" type="TextureRect" parent="Guide2/VBoxContainer4"]
+[node name="TextureRect2" type="TextureRect" parent="Guide3/VBoxContainer4"]
 layout_mode = 2
 size_flags_horizontal = 4
 texture = ExtResource("6_6iynk")
 stretch_mode = 2
+
+[node name="TextureRect4" type="TextureRect" parent="Guide3/VBoxContainer4"]
+layout_mode = 2
+size_flags_horizontal = 4
+texture = ExtResource("6_6iynk")
+stretch_mode = 2
+
+[node name="TextureRect5" type="TextureRect" parent="Guide3/VBoxContainer4"]
+layout_mode = 2
+size_flags_horizontal = 4
+texture = ExtResource("6_6iynk")
+stretch_mode = 2
+
+[node name="VBoxContainer5" type="VBoxContainer" parent="Guide3"]
+layout_mode = 0
+offset_left = 355.0
+offset_top = 60.0
+offset_right = 383.0
+offset_bottom = 79.0
+scale = Vector2(2, 2)
+theme_override_constants/separation = 0
+alignment = 1
+
+[node name="TextureRect2" type="TextureRect" parent="Guide3/VBoxContainer5"]
+layout_mode = 2
+size_flags_horizontal = 4
+texture = ExtResource("8_ynfkj")
+stretch_mode = 2
+
+[node name="TextureRect3" type="TextureRect" parent="Guide3/VBoxContainer5"]
+layout_mode = 2
+size_flags_horizontal = 4
+texture = ExtResource("9_xd56k")
+stretch_mode = 2
+
+[node name="VBoxContainer6" type="VBoxContainer" parent="Guide3"]
+layout_mode = 0
+offset_left = 355.0
+offset_top = 160.0
+offset_right = 383.0
+offset_bottom = 184.0
+scale = Vector2(2, 2)
+theme_override_constants/separation = 0
+alignment = 1
+
+[node name="TextureRect3" type="TextureRect" parent="Guide3/VBoxContainer6"]
+layout_mode = 2
+size_flags_horizontal = 4
+texture = ExtResource("9_xd56k")
+stretch_mode = 2
+
+[node name="TextureRect2" type="TextureRect" parent="Guide3/VBoxContainer6"]
+layout_mode = 2
+size_flags_horizontal = 4
+texture = ExtResource("8_ynfkj")
+stretch_mode = 2
+
+[node name="TextureRect4" type="TextureRect" parent="Guide3/VBoxContainer6"]
+layout_mode = 2
+size_flags_horizontal = 4
+texture = ExtResource("8_ynfkj")
+stretch_mode = 2
+
+[node name="TextureRect5" type="TextureRect" parent="Guide3/VBoxContainer6"]
+layout_mode = 2
+size_flags_horizontal = 4
+texture = ExtResource("8_ynfkj")
+stretch_mode = 2
+
+[node name="GuidePlayer1" type="TextureRect" parent="Guide3"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -219.0
+offset_top = -9.00003
+offset_right = -179.0
+offset_bottom = 31.0
+grow_horizontal = 2
+grow_vertical = 2
+scale = Vector2(1.2, 1.2)
+texture = ExtResource("2_qvaqe")
+
+[node name="TextureRect" type="TextureRect" parent="Guide3/GuidePlayer1"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -28.5
+offset_top = -28.5
+offset_right = 28.5
+offset_bottom = 28.5
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("8_jubf5")
+
+[node name="TextureRect" type="TextureRect" parent="Guide3"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -85.0
+offset_top = -13.0
+offset_right = -15.0
+offset_bottom = 57.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("9_vuuo4")
+
+[node name="GuidePlayer2" type="TextureRect" parent="Guide3"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -72.0
+offset_top = -3.0
+offset_right = -32.0
+offset_bottom = 37.0
+grow_horizontal = 2
+grow_vertical = 2
+scale = Vector2(1.2, 1.2)
+texture = ExtResource("2_qvaqe")
+
+[node name="GuidePlayer3" type="TextureRect" parent="Guide3"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = 65.0
+offset_top = -7.00003
+offset_right = 105.0
+offset_bottom = 33.0
+grow_horizontal = 2
+grow_vertical = 2
+scale = Vector2(1.2, 1.2)
+texture = ExtResource("2_qvaqe")
+
+[node name="TextureRect2" type="TextureRect" parent="Guide3"]
+layout_mode = 0
+offset_left = 358.0
+offset_top = 180.0
+offset_right = 411.0
+offset_bottom = 233.0
+texture = ExtResource("12_xd56k")
+
+[node name="HBoxContainer" type="HBoxContainer" parent="Guide3"]
+layout_mode = 1
+anchors_preset = 2
+anchor_top = 1.0
+anchor_bottom = 1.0
+offset_left = 17.0
+offset_top = -72.0
+offset_right = 365.0
+offset_bottom = -13.0
+grow_vertical = 0
+
+[node name="VBoxContainer7" type="VBoxContainer" parent="Guide3/HBoxContainer"]
+layout_mode = 2
+
+[node name="Label2" type="Label" parent="Guide3/HBoxContainer/VBoxContainer7"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.584314, 0.627451, 0.764706, 1)
+theme_override_font_sizes/font_size = 12
+text = "* 拾取'护盾'可破坏所有类型障碍"
+
+[node name="Label3" type="Label" parent="Guide3/HBoxContainer/VBoxContainer7"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.701961, 0.490196, 0.34902, 1)
+theme_override_font_sizes/font_size = 12
+text = "* 拾取'锯齿'可破坏木质障碍"
+
+[node name="Label4" type="Label" parent="Guide3/HBoxContainer/VBoxContainer7"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.337255, 0.47451, 0.333333, 1)
+theme_override_font_sizes/font_size = 12
+text = "* 杂草障碍可随意破坏"
+
+[node name="ColorRect" type="ColorRect" parent="Guide3/HBoxContainer"]
+custom_minimum_size = Vector2(1, 0)
+layout_mode = 2
+color = Color(0.2698, 0.570603, 0.71, 0.596078)
+
+[node name="VBoxContainer8" type="VBoxContainer" parent="Guide3/HBoxContainer"]
+layout_mode = 2
+alignment = 1
+
+[node name="Label2" type="Label" parent="Guide3/HBoxContainer/VBoxContainer8"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.59891, 0.59891, 0.59891, 1)
+theme_override_font_sizes/font_size = 12
+text = "* 破坏障碍可获得额外分数"
+
+[node name="Label3" type="Label" parent="Guide3/HBoxContainer/VBoxContainer8"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.580392, 0.580392, 0.580392, 1)
+theme_override_font_sizes/font_size = 12
+text = "* 拾取双倍分数道具后所有得分翻倍"
 
 [node name="Label" type="Label" parent="."]
 layout_mode = 1
@@ -264,4 +549,23 @@ offset_right = 57.0
 offset_bottom = 75.0
 grow_horizontal = 2
 theme_override_font_sizes/font_size = 40
-text = "Guide"
+text = "游戏说明"
+
+[node name="Button" type="Button" parent="."]
+custom_minimum_size = Vector2(120, 42)
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -36.0
+offset_top = -73.0
+offset_right = 36.0
+offset_bottom = -42.0
+grow_horizontal = 2
+grow_vertical = 0
+theme_override_font_sizes/font_size = 24
+text = "我知道了"
+
+[connection signal="pressed" from="Button" to="." method="_on_button_pressed"]
