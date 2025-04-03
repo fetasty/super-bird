@@ -42,6 +42,7 @@ var _is_jumping = false
 @onready var double_buff: Sprite2D = $DoubleBuff
 @onready var shield_buff: Sprite2D = $ShieldBuff
 @onready var area_2d: Area2D = $Area2D
+@onready var area_2d_collect: Area2D = $Area2DCollect
 
 
 func _ready() -> void:
@@ -49,6 +50,7 @@ func _ready() -> void:
 	GameData.config_changed.connect(_on_config_changed)
 	GameData.data_changed.connect(_on_data_changed)
 	area_2d.set_meta("player", self)
+	area_2d_collect.set_meta("player", self)
 	_buff_obj["double_score"] = double_buff
 	_buff_obj["saw"] = saw_buff
 	_buff_obj["shield"] = shield_buff

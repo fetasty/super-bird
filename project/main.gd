@@ -60,13 +60,14 @@ var _game_layer_scale: float = 2.0
 @onready var resume: Button = $UILayer/Menu/VBoxContainer/VBoxContainer/Resume
 @onready var restart: Button = $UILayer/Menu/VBoxContainer/VBoxContainer/Restart
 @onready var hud_score: Label = $UILayer/HUD/HBoxContainer/Score
-@onready var version_label: Label = $UILayer/Menu/VersionInfo/Version
-@onready var mute_button: TextureButton = $UILayer/Menu/VBoxContainer/VBoxContainer/VolumeContainer/MuteButton
-@onready var volume_slider: HSlider = $UILayer/Menu/VBoxContainer/VBoxContainer/VolumeContainer/VolumeSlider
+@onready var version_label: Label = $UILayer/Menu/VBoxContainer2/VersionInfo/Version
+@onready var mute_button: TextureButton = $UILayer/Menu/VBoxContainer/VBoxContainer/Control/VolumeContainer/MuteButton
+@onready var volume_slider: HSlider = $UILayer/Menu/VBoxContainer/VBoxContainer/Control/VolumeContainer/VolumeSlider
 @onready var dynamic: Node2D = $Dynamic
 @onready var role_select: Control = $UILayer/Menu/RoleSelect
 @onready var role_items: HBoxContainer = $UILayer/Menu/RoleSelect/RoleItems
 @onready var selected_border: TextureRect = $UILayer/Menu/RoleSelect/SelectedBorder
+@onready var guide: Control = $UILayer/Guide
 
 
 func _ready() -> void:
@@ -254,3 +255,7 @@ func _on_role_pressed() -> void:
 func _on_role_select_back_gui_input(event: InputEvent) -> void:
 	if event is InputEventMouseButton and event.is_pressed():
 		role_select.visible = false
+
+
+func _on_show_guide_pressed() -> void:
+	guide.visible = true

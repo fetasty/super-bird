@@ -27,6 +27,7 @@ const _DEFAULT_DATA: Dictionary = {
 	"audio_mute": false,
 	"audio_volume": 0.5,
 	"last_player_role": "chick", # chick, pig, dog
+	"show_guide_when_launch_game": true,
 }
 const _SAVE_FILE_PATH = "user://save.cfg"
 const _GAME_SECTION = "game"

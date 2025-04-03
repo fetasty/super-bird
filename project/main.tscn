@@ -106,12 +106,28 @@ layout_mode = 2
 theme_override_constants/separation = 10
 alignment = 1
 
-[node name="VolumeContainer" type="HBoxContainer" parent="UILayer/Menu/VBoxContainer/VBoxContainer"]
+[node name="Control" type="Control" parent="UILayer/Menu/VBoxContainer/VBoxContainer"]
+custom_minimum_size = Vector2(166, 36)
 layout_mode = 2
+
+[node name="VolumeContainer" type="HBoxContainer" parent="UILayer/Menu/VBoxContainer/VBoxContainer/Control"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -83.0
+offset_top = -18.0
+offset_right = 180.0
+offset_bottom = 30.0
+grow_horizontal = 2
+grow_vertical = 2
+scale = Vector2(0.7, 0.7)
 theme_override_constants/separation = 15
 alignment = 1
 
-[node name="MuteButton" type="TextureButton" parent="UILayer/Menu/VBoxContainer/VBoxContainer/VolumeContainer"]
+[node name="MuteButton" type="TextureButton" parent="UILayer/Menu/VBoxContainer/VBoxContainer/Control/VolumeContainer"]
 layout_mode = 2
 size_flags_horizontal = 6
 size_flags_vertical = 4
@@ -119,7 +135,7 @@ toggle_mode = true
 texture_normal = ExtResource("3_1bvp3")
 texture_pressed = ExtResource("4_lquwl")
 
-[node name="VolumeSlider" type="HSlider" parent="UILayer/Menu/VBoxContainer/VBoxContainer/VolumeContainer"]
+[node name="VolumeSlider" type="HSlider" parent="UILayer/Menu/VBoxContainer/VBoxContainer/Control/VolumeContainer"]
 custom_minimum_size = Vector2(200, 0)
 layout_mode = 2
 size_flags_horizontal = 6
@@ -150,33 +166,41 @@ layout_mode = 2
 theme_override_font_sizes/font_size = 20
 text = "重新开始"
 
+[node name="ShowGuide" type="Button" parent="UILayer/Menu/VBoxContainer/VBoxContainer"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 20
+text = "游戏说明"
+
 [node name="Exit" type="Button" parent="UILayer/Menu/VBoxContainer/VBoxContainer"]
 layout_mode = 2
 theme_override_font_sizes/font_size = 20
 text = "退出"
 
-[node name="VersionInfo" type="HBoxContainer" parent="UILayer/Menu"]
+[node name="VBoxContainer2" type="VBoxContainer" parent="UILayer/Menu"]
 layout_mode = 1
 anchors_preset = 3
 anchor_left = 1.0
 anchor_top = 1.0
 anchor_right = 1.0
 anchor_bottom = 1.0
-offset_left = -118.0
-offset_top = -60.0
-offset_right = -50.0
+offset_left = -84.0
+offset_top = -62.0
+offset_right = -40.0
 offset_bottom = -20.0
 grow_horizontal = 0
 grow_vertical = 0
 
-[node name="Label" type="Label" parent="UILayer/Menu/VersionInfo"]
+[node name="VersionInfo" type="HBoxContainer" parent="UILayer/Menu/VBoxContainer2"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="UILayer/Menu/VBoxContainer2/VersionInfo"]
 visible = false
 layout_mode = 2
 theme_override_colors/font_color = Color(0.491863, 0.491863, 0.491863, 1)
 theme_override_font_sizes/font_size = 10
 text = "Version:"
 
-[node name="Version" type="Label" parent="UILayer/Menu/VersionInfo"]
+[node name="Version" type="Label" parent="UILayer/Menu/VBoxContainer2/VersionInfo"]
 layout_mode = 2
 theme_override_colors/font_color = Color(0.491863, 0.491863, 0.491863, 1)
 theme_override_font_sizes/font_size = 10
@@ -227,16 +251,18 @@ theme_override_constants/separation = 50
 alignment = 1
 
 [node name="Guide" parent="UILayer" instance=ExtResource("6_5vw27")]
+visible = false
 
 [node name="Dynamic" type="Node2D" parent="."]
 script = ExtResource("5_lquwl")
 
 [connection signal="timeout" from="GameLayer/BarrierTimer" to="." method="_on_barrier_timer_timeout"]
-[connection signal="toggled" from="UILayer/Menu/VBoxContainer/VBoxContainer/VolumeContainer/MuteButton" to="." method="_on_mute_button_toggled"]
-[connection signal="drag_ended" from="UILayer/Menu/VBoxContainer/VBoxContainer/VolumeContainer/VolumeSlider" to="." method="_on_h_slider_drag_ended"]
+[connection signal="toggled" from="UILayer/Menu/VBoxContainer/VBoxContainer/Control/VolumeContainer/MuteButton" to="." method="_on_mute_button_toggled"]
+[connection signal="drag_ended" from="UILayer/Menu/VBoxContainer/VBoxContainer/Control/VolumeContainer/VolumeSlider" to="." method="_on_h_slider_drag_ended"]
 [connection signal="pressed" from="UILayer/Menu/VBoxContainer/VBoxContainer/Start" to="." method="_on_start_pressed"]
 [connection signal="pressed" from="UILayer/Menu/VBoxContainer/VBoxContainer/Role" to="." method="_on_role_pressed"]
 [connection signal="pressed" from="UILayer/Menu/VBoxContainer/VBoxContainer/Resume" to="." method="_on_resume_pressed"]
 [connection signal="pressed" from="UILayer/Menu/VBoxContainer/VBoxContainer/Restart" to="." method="_on_restart_pressed"]
+[connection signal="pressed" from="UILayer/Menu/VBoxContainer/VBoxContainer/ShowGuide" to="." method="_on_show_guide_pressed"]
 [connection signal="pressed" from="UILayer/Menu/VBoxContainer/VBoxContainer/Exit" to="." method="_on_exit_pressed"]
 [connection signal="gui_input" from="UILayer/Menu/RoleSelect/ColorRect" to="." method="_on_role_select_back_gui_input"]

@@ -568,4 +568,13 @@ grow_vertical = 0
 theme_override_font_sizes/font_size = 24
 text = "我知道了"
 
+[node name="GuideButton" type="CheckButton" parent="."]
+offset_left = 782.0
+offset_top = 478.0
+offset_right = 920.0
+offset_bottom = 502.0
+theme_override_font_sizes/font_size = 10
+text = "游戏启动时显示此界面"
+
 [connection signal="pressed" from="Button" to="." method="_on_button_pressed"]
+[connection signal="toggled" from="GuideButton" to="." method="_on_guide_button_toggled"]
