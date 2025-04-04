@@ -34,6 +34,7 @@ var _jump_degrees = -10.0
 
 var _velocity = 0.0
 var _is_jumping = false
+var wall_distance = 20.0 ## 空气墙的距离
 
 
 @onready var sprite_2d: Sprite2D = $Sprite2D
@@ -73,10 +74,10 @@ func _physics_process(delta: float) -> void:
 	else:
 		sprite_2d.rotation_degrees = _jump_degrees
 	position.y += _velocity * delta
-	if position.y < -10:
+	if position.y < -wall_distance:
 		player_collided_with_wall.emit()
 		AudioPlayer.play_hit()
-	elif position.y > get_viewport_rect().size.y / _game_layer_scale + 10:
+	elif position.y > get_viewport_rect().size.y / _game_layer_scale + wall_distance:
 		player_collided_with_wall.emit()
 		AudioPlayer.play_hit()
 
@@ -173,6 +174,7 @@ func _load_config() -> void:
 	_fall_degress = GameData.get_config("fall_degress")
 	_jump_degrees = GameData.get_config("jump_degress")
 	_game_layer_scale = GameData.get_config("game_layer_scale")
+	wall_distance = GameData.get_config("wall_distance")
 	timer.wait_time = _max_jump_time
 	_load_res()
 

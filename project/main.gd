@@ -68,6 +68,8 @@ var _game_layer_scale: float = 2.0
 @onready var role_items: HBoxContainer = $UILayer/Menu/RoleSelect/RoleItems
 @onready var selected_border: TextureRect = $UILayer/Menu/RoleSelect/SelectedBorder
 @onready var guide: Control = $UILayer/Guide
+@onready var count_down_button: CheckButton = $UILayer/Menu/VBoxContainer/VBoxContainer/CountDown
+@onready var count_down: Control = $UILayer/CountDown
 
 
 func _ready() -> void:
@@ -92,6 +94,8 @@ func _game_init() -> void:
 	# version info display
 	var version = load("res://version.tres")
 	version_label.text = version.version_str()
+	# count down button
+	count_down_button.button_pressed = GameData.get_data("show_count_down")
 	# reset game scene and game data
 	_reset_game()
 	# roles
@@ -128,6 +132,11 @@ func _reset_game() -> void:
 
 
 func _restart_game() -> void:
+	var show_count_down = GameData.get_data("show_count_down")
+	if show_count_down:
+		menu.visible = false
+		count_down.start()
+		await count_down.finished
 	_reset_game()
 	game_state = STATE_PLAYING
 
@@ -259,3 +268,7 @@ func _on_role_select_back_gui_input(event: InputEvent) -> void:
 
 func _on_show_guide_pressed() -> void:
 	guide.visible = true
+
+
+func _on_count_down_toggled(toggled_on: bool) -> void:
+	GameData.set_data("show_count_down", toggled_on)

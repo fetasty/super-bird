@@ -569,6 +569,7 @@ theme_override_font_sizes/font_size = 24
 text = "我知道了"
 
 [node name="GuideButton" type="CheckButton" parent="."]
+layout_mode = 0
 offset_left = 782.0
 offset_top = 478.0
 offset_right = 920.0

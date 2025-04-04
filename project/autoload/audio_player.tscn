@@ -1,4 +1,4 @@
-[gd_scene load_steps=8 format=3 uid="uid://dx11sabgajww8"]
+[gd_scene load_steps=9 format=3 uid="uid://dx11sabgajww8"]
 
 [ext_resource type="AudioStream" uid="uid://df1vx11au6byj" path="res://audios/back1.wav" id="1_81fu2"]
 [ext_resource type="Script" uid="uid://c2ma4ol8ah8um" path="res://autoload/audio_player.gd" id="1_f1804"]
@@ -7,6 +7,7 @@
 [ext_resource type="AudioStream" uid="uid://1heeju235jus" path="res://audios/hit.wav" id="5_jqcyi"]
 [ext_resource type="AudioStream" uid="uid://b16bdus8xssy6" path="res://audios/item.mp3" id="6_2ujlh"]
 [ext_resource type="AudioStream" uid="uid://cayv5o7tucl58" path="res://audios/crack.mp3" id="7_2ujlh"]
+[ext_resource type="AudioStream" uid="uid://ba5hmrhv708ox" path="res://audios/start_beeps.mp3" id="8_ibxjq"]
 
 [node name="AudioPlayer" type="Node2D"]
 script = ExtResource("1_f1804")
@@ -28,6 +29,9 @@ stream = ExtResource("6_2ujlh")
 
 [node name="CrackAudio" type="AudioStreamPlayer" parent="."]
 stream = ExtResource("7_2ujlh")
+
+[node name="StartBeeps" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("8_ibxjq")
 
 [connection signal="finished" from="WelcomAudio" to="." method="_on_welcom_audio_finished"]
 [connection signal="finished" from="BackgroundAudio" to="." method="_on_background_audio_finished"]

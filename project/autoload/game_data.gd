@@ -22,12 +22,14 @@ const _DEFAULT_CONFIG: Dictionary = {
 	"level_barrier_spawn_time": [0.9, 0.8, 0.7],
 	"level_barrier_speed": [130.0, 150.0, 170.0],
 	"buff_time": {"double_score": 20.0, "saw": 15.0, "shield": 15.0},
+	"wall_distance": 20.0,
 }
 const _DEFAULT_DATA: Dictionary = {
 	"audio_mute": false,
 	"audio_volume": 0.5,
 	"last_player_role": "chick", # chick, pig, dog
 	"show_guide_when_launch_game": true,
+	"show_count_down": true,
 }
 const _SAVE_FILE_PATH = "user://save.cfg"
 const _GAME_SECTION = "game"
